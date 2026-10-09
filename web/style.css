@@ -1,0 +1,348 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f4f9;
+}
+
+.login-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* PANEL IZQUIERDO */
+.hero-panel {
+    flex: 1.1;
+    position: relative;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 100%), 
+                url('https://media.istockphoto.com/id/2148129949/es/foto/interior-de-la-cl%C3%ADnica-moderna-en-blanco.jpg?s=612x612&w=0&k=20&c=xMAUC43q2MegvgMEtPVh7-CVKEw9sX-jgg1ZmsA3F7I=') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hero-top {
+    padding: 48px 56px;
+    z-index: 2;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: -25px;
+    margin-bottom: 50px;
+}
+
+.logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clinic-cross {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+}
+
+.brand-small {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #1e3a8a;
+}
+
+.brand-large {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #004080;
+    letter-spacing: -0.5px;
+}
+
+.hero-heading {
+    max-width: 420px;
+    margin-top: -25px;
+}
+
+.hero-heading h1 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #2c4258;
+    margin-bottom: 10px;
+}
+
+.hero-heading p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #4a5d6e;
+}
+
+.hero-bottom-wave {
+    position: relative;
+    margin-top: auto;
+    background-color: #1869a8;
+    padding: 30px 40px 35px 40px;
+}
+
+.wave-shape {
+    position: absolute;
+    top: -45px;
+    left: 0;
+    width: 100%;
+    height: 48px;
+}
+
+.hero-features {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.feature-item {
+    flex: 1;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 8px;
+}
+
+.feature-icon {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.feature-item h4 {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.feature-item p {
+    font-size: 0.76rem;
+    color: #d0e4f7;
+}
+
+.feature-divider {
+    width: 1px;
+    height: 42px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* PANEL DERECHO */
+.form-panel {
+    flex: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at bottom right, #e3effd 0%, #edf4fc 60%, #f4f8fe 100%);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+#particleCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.login-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    padding: 48px 40px;
+    border-radius: 28px;
+    box-shadow: 0 15px 35px rgba(16, 42, 67, 0.04);
+}
+
+.card-header h2 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #0b3c6d;
+    margin-bottom: 8px;
+}
+
+.card-header p {
+    font-size: 0.92rem;
+    color: #52667a;
+    margin-bottom: 24px;
+}
+
+/* ESTILO DE LA ALERTA DE ERROR EN ROJO */
+.alert-error {
+    background-color: #fdf2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-error i {
+    font-size: 0.95rem;
+    color: #dc2626;
+}
+
+/* CAMPOS DE FORMULARIO */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #486581;
+    margin-bottom: 8px;
+}
+
+.input-group label i {
+    font-size: 0.9rem;
+    color: #486581;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 0.92rem;
+    border: 1px solid #d9e2ec;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    color: #102a43;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+    background-color: #ffffff;
+    border-color: #0073e6;
+    box-shadow: 0 0 0 3px rgba(0, 115, 230, 0.1);
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #627284;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-options {
+    margin-bottom: 24px;
+}
+
+.checkbox-container {
+    font-size: 0.85rem;
+    color: #486581;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-container input {
+    accent-color: #0073e6;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: #0073e6;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #005bb5;
+}
+
+.divider {
+    text-align: center;
+    margin: 24px 0 20px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #e1e9f2;
+}
+
+.divider span {
+    position: relative;
+    background-color: #ffffff;
+    padding: 0 12px;
+    font-size: 0.82rem;
+    color: #627284;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #829ab1;
+}
+
+.security-badge i {
+    font-size: 0.75rem;
+}
