@@ -8,7 +8,8 @@ public class ConexionBD {
     private static ConexionBD instancia;
     private Connection conexion;
     
-    private final String URL = "jdbc:sqlserver://BOKEX:1433;databaseName=ClinicaLaLuzDB;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
+    // URL actualizada para conectar con Azure SQL Database
+    private final String URL = "jdbc:sqlserver://servidor-clinica.database.windows.net:1433;database=ClinicaLaLuzDB;user=adminclinica;password=Admin123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
     private ConexionBD() {
         conectar();
@@ -18,7 +19,7 @@ public class ConexionBD {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             this.conexion = DriverManager.getConnection(URL);
-            System.out.println("¡CONEXIÓN EXITOSA A SQL SERVER!");
+            System.out.println("¡CONEXIÓN EXITOSA A SQL SERVER EN AZURE!");
         } catch (ClassNotFoundException e) {
             System.err.println("Error: No se encontró el Driver JDBC -> " + e.getMessage());
         } catch (SQLException e) {
