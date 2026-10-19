@@ -22,7 +22,7 @@ public class PacienteServlet extends HttpServlet {
         if ("listar".equals(accion)) {
             List<Paciente> lista = pacienteRepository.listarTodos();
             request.setAttribute("listaPacientes", lista);
-            request.getRequestDispatcher("vistas/pacientes.jsp").forward(request, response);
+            request.getRequestDispatcher("pacientes.jsp").forward(request, response);
         } else {
             response.sendRedirect("pacientes");
         }
