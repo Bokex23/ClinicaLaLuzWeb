@@ -222,7 +222,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="usuarios">
-                        <!-- ICONO CORREGIDO PARA GESTIÓN DE USUARIOS -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
@@ -234,7 +233,11 @@
                 </li>
                 <li>
                     <a class="nav-link" href="pacientes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                        <!-- ICONO DE PACIENTES ENDEREZADO -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
                         <span>Gestión de Pacientes</span>
                     </a>
                 </li>

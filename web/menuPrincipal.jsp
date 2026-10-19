@@ -338,7 +338,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="usuarios">
-                        <!-- ICONO CORREGIDO PARA GESTIÓN DE USUARIOS -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
@@ -350,7 +349,11 @@
                 </li>
                 <li>
                     <a class="nav-link" href="pacientes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                        <!-- ICONO DE PACIENTES ENDEREZADO SIN CAMBIAR SU FORMA ORIGINAL -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
                         <span>Gestión de Pacientes</span>
                     </a>
                 </li>
@@ -415,7 +418,6 @@
             </div>
             <div class="admin-pill" aria-label="Usuario actual: Administrador">
                 <span class="admin-avatar" aria-hidden="true">
-                    <!-- ICONO CORREGIDO PARA ADMINISTRADOR -->
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
@@ -433,13 +435,12 @@
                 </div>
             </div>
 
-            <!-- Grilla de Módulos (Gestión de Usuarios + Módulos Etapa 5) -->
+            <!-- Grilla de Módulos -->
             <div class="module-grid">
                 <!-- 1. Gestión de Usuarios -->
                 <article class="module-card primary">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
-                            <!-- ICONO CORREGIDO PARA GESTIÓN DE USUARIOS EN LA TARJETA -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
@@ -458,11 +459,14 @@
                     </a>
                 </article>
 
-                <!-- 2. Gestión de Pacientes -->
+                <!-- 2. Gestión de Pacientes (ICONO ENDEREZADO SIN CAMBIAR FORMA) -->
                 <article class="module-card medical">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
                         </div>
                         <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
                     </div>
