@@ -217,3 +217,98 @@
             </div>
             <div>
                 <p class="brand-name">Clínica La Luz</p>
+                <p class="brand-caption">Portal Administrativo</p>
+            </div>
+        </div>
+
+        <nav class="nav-area">
+            <ul class="nav-list">
+                <li>
+                    <a class="nav-link" href="menuPrincipal.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9.5V21h14V9.5M9 21v-7h6v7"/></svg>
+                        <span>Menú Principal</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link is-active" href="usuarios.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
+                        <span>Gestión de Usuarios</span>
+                    </a>
+                </li>
+                <li class="nav-divider" aria-hidden="true"></li>
+                <li>
+                    <a class="nav-link logout" href="login.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">Gestión de Usuarios</h1>
+                <p class="page-subtitle">Administración de cuentas, credenciales y roles del sistema (Módulo 3 / Etapa 4).</p>
+            </div>
+            <button class="btn-primary-custom" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
+                Nuevo Usuario
+            </button>
+        </header>
+
+        <!-- Tabla CRUD Dinámica -->
+        <div class="card-table">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Intentos Fallidos</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                            List<Usuario> lista = (List<Usuario>) request.getAttribute("listaUsuarios");
+                            if (lista != null && !lista.isEmpty()) {
+                                for (Usuario u : lista) { 
+                        %>
+                            <tr>
+                                <td style="font-weight: 650;"><%= u.getIdUsuario() %></td>
+                                <td style="font-weight: 600;"><%= u.getNombreUsuario() %></td>
+                                <rd><span class="badge badge-admin">Rol ID: <%= u.getIdRol() %></span></td>
+                                <td><span class="badge badge-active"><%= u.getEstado() %></span></td>
+                                <td><%= u.getIntentosFallidos() %></td>
+                                <td style="text-align: center;">
+                                    <div class="action-btns">
+                                        <button class="btn-icon edit" title="Editar usuario">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                        </button>
+                                        <button class="btn-icon delete" title="Eliminar usuario">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% 
+                                }
+                            } else { 
+                        %>
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados o el Servlet no ha inicializado la lista. (Asegúrate de ingresar mediante <a href="usuarios" style="color: var(--blue);">/usuarios</a>)</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
