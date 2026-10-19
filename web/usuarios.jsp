@@ -37,7 +37,7 @@
         button { font: inherit; cursor: pointer; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra lateral idéntica al Menú Principal */
+        /* Barra lateral idéntica */
         .sidebar {
             position: fixed;
             inset: 0 auto 0 0;
@@ -46,7 +46,7 @@
             flex-direction: column;
             width: var(--sidebar-width);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
             color: #fff;
             background: linear-gradient(160deg, #104875 0%, var(--navy) 42%, var(--navy-deep) 100%);
             box-shadow: 10px 0 35px rgba(9, 40, 72, .08);
@@ -93,7 +93,7 @@
             display: flex;
             align-items: center;
             gap: 13px;
-            min-height: 54px;
+            min-height: 48px;
             padding: 0 16px;
             color: rgba(255,255,255,.76);
             font-size: 14px;
@@ -158,6 +158,7 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
             overflow: hidden;
+            margin-bottom: 25px;
         }
         .table-container { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
@@ -230,10 +231,39 @@
                     </a>
                 </li>
                 <li>
-                    <!-- ENLACE CORREGIDO AL SERVLET -->
                     <a class="nav-link is-active" href="usuarios">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
                         <span>Gestión de Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="pacientes">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Gestión de Pacientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="medicos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+                        <span>Cuerpo Médico</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="proveedores">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
+                        <span>Proveedores Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="servicios">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        <span>Servicios Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="insumos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Farmacia e Insumos</span>
                     </a>
                 </li>
                 <li class="nav-divider" aria-hidden="true"></li>
@@ -252,7 +282,7 @@
         <header class="page-header">
             <div>
                 <h1 class="page-title">Gestión de Usuarios</h1>
-                <p class="page-subtitle">Administración de cuentas, credenciales y roles del sistema (Módulo 3 / Etapa 4).</p>
+                <p class="page-subtitle">Administración de cuentas, credenciales y roles del sistema.</p>
             </div>
             <button class="btn-primary-custom" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
