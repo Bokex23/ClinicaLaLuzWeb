@@ -1,15 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, app.models.entities.Paciente" %>
+<%@ page import="java.util.List" %>
+<%@ page import="app.models.entities.Paciente" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Pacientes - Clínica La Luz</title>
-    <!-- Incluimos Bootstrap para el formulario, manteniendo los estilos base -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* MISMOS ESTILOS QUE USUARIOS.JSP */
         :root {
             --navy: #0d3b66;
             --navy-deep: #082b4b;
@@ -48,7 +46,7 @@
             flex-direction: column;
             width: var(--sidebar-width);
             min-height: 100vh;
-            overflow-y: auto;
+            overflow: hidden;
             color: #fff;
             background: linear-gradient(160deg, #104875 0%, var(--navy) 42%, var(--navy-deep) 100%);
             box-shadow: 10px 0 35px rgba(9, 40, 72, .08);
@@ -111,7 +109,7 @@
             background: linear-gradient(110deg, #1680ff, #075bf0);
             box-shadow: 0 9px 22px rgba(0, 93, 245, .28);
         }
-        .nav-divider { height: 1px; margin: 14px 10px 10px; background: rgba(255,255,255,.11); }
+        .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
         .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
@@ -150,27 +148,27 @@
             font-weight: 700;
             transition: transform .2s, box-shadow .2s;
         }
-        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff;}
+        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
         .btn-primary-custom svg { width: 17px; height: 17px; }
 
-        /* Adaptaciones de la tabla a tus estilos */
-        .card-custom {
+        /* Tabla Estilizada */
+        .card-table {
             background: #fff;
             border: 1px solid rgba(226,234,244,.9);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
             overflow: hidden;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
         }
-        .card-custom .card-header {
-             background: #f8fbff;
-             color: var(--navy);
-             padding: 16px 20px;
-             font-weight: 750;
-             border-bottom: 1px solid var(--line);
-        }
+        .table-container { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        th { background: #f8fbff; color: var(--navy); padding: 16px 20px; font-weight: 750; border-bottom: 1px solid var(--line); }
+        td { padding: 16px 20px; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafdfd; }
 
-        .badge-custom {
+        /* Badges de estado */
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -178,9 +176,8 @@
             border-radius: 99px;
             font-size: 11px;
             font-weight: 650;
-            color: #2ca66b;
-            background: #e8f8ef;
         }
+        .badge-active { color: #2ca66b; background: #e8f8ef; }
 
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
@@ -266,97 +263,46 @@
         <header class="page-header">
             <div>
                 <h1 class="page-title">Gestión de Pacientes</h1>
-                <p class="page-subtitle">Registro, control de historias clínicas y administración de datos.</p>
+                <p class="page-subtitle">Registro, control de historias clínicas y administración de datos de pacientes.</p>
             </div>
         </header>
 
-        <!-- Formulario de Registro (Estilizado) -->
-        <div class="card-custom">
-            <div class="card-header">Registrar Nuevo Paciente</div>
-            <div class="card-body p-4">
-                <form action="pacientes" method="POST">
-                    <input type="hidden" name="accion" value="registrar">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Nombres</label>
-                            <input type="text" class="form-control" name="nombres" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Apellidos</label>
-                            <input type="text" class="form-control" name="apellidos" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Tipo Documento</label>
-                            <select class="form-select" name="tipo_documento">
-                                <option value="DNI">DNI</option>
-                                <option value="CE">Carnet de Extranjería</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Nº Documento</label>
-                            <input type="text" class="form-control" name="numero_documento" required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Teléfono</label>
-                            <input type="text" class="form-control" name="telefono">
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Correo</label>
-                            <input type="email" class="form-control" name="correo">
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label" style="color: var(--navy); font-weight: 500;">Dirección</label>
-                            <input type="text" class="form-control" name="direccion">
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                         <button type="submit" class="btn-primary-custom">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                            Guardar Paciente
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Tabla de Listado -->
-        <div class="card-custom">
-            <div class="card-header">Lista de Pacientes Registrados</div>
-            <div class="table-responsive">
-                <table class="table table-hover mb-0" style="font-size: 13px;">
-                    <thead style="background: #f8fbff; color: var(--navy);">
+        <!-- Tabla CRUD Dinámica -->
+        <div class="card-table">
+            <div class="table-container">
+                <table>
+                    <thead>
                         <tr>
-                            <th class="px-4 py-3">ID</th>
-                            <th class="px-4 py-3">Nombres y Apellidos</th>
-                            <th class="px-4 py-3">Documento</th>
-                            <th class="px-4 py-3">Teléfono</th>
-                            <th class="px-4 py-3">Correo</th>
-                            <th class="px-4 py-3">Dirección</th>
-                            <th class="px-4 py-3">Estado</th>
+                            <th>ID</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Documento</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Dirección</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%
+                        <% 
                             List<Paciente> lista = (List<Paciente>) request.getAttribute("listaPacientes");
                             if (lista != null && !lista.isEmpty()) {
-                                for (Paciente p : lista) {
-                        %>
-                        <tr>
-                            <td class="px-4 py-3" style="font-weight: 650; color: var(--ink);"><%= p.getIdPaciente() %></td>
-                            <td class="px-4 py-3" style="font-weight: 600; color: var(--ink);"><%= p.getNombres() %> <%= p.getApellidos() %></td>
-                            <td class="px-4 py-3"><%= p.getTipoDocumento() %>: <%= p.getNumeroDocumento() %></td>
-                            <td class="px-4 py-3"><%= p.getTelefono() %></td>
-                            <td class="px-4 py-3"><%= p.getCorreo() %></td>
-                            <td class="px-4 py-3"><%= p.getDireccion() %></td>
-                            <td class="px-4 py-3"><span class="badge-custom"><%= p.getEstado() %></span></td>
-                        </tr>
-                        <% 
-                                }
-                            } else {
+                                for (Paciente p : lista) { 
                         %>
                             <tr>
-                                <td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">No hay pacientes registrados en el sistema o no se ha podido conectar al Servlet.</td>
+                                <td style="font-weight: 650;"><%= p.getIdPaciente() %></td>
+                                <td style="font-weight: 600;"><%= p.getNombres() %> <%= p.getApellidos() %></td>
+                                <td><%= p.getTipoDocumento() %>: <%= p.getNumeroDocumento() %></td>
+                                <td><%= p.getTelefono() %></td>
+                                <td><%= p.getCorreo() %></td>
+                                <td><%= p.getDireccion() %></td>
+                                <td><span class="badge badge-active"><%= p.getEstado() %></span></td>
+                            </tr>
+                        <% 
+                                }
+                            } else { 
+                        %>
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">No hay pacientes registrados en el sistema.</td>
                             </tr>
                         <% } %>
                     </tbody>
