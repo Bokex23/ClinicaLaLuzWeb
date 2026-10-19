@@ -36,7 +36,6 @@
         button { font: inherit; cursor: pointer; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra lateral idéntica */
         .sidebar {
             position: fixed;
             inset: 0 auto 0 0;
@@ -114,7 +113,6 @@
         .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
         .sidebar-bottom .tiny-line { width: 42px; height: 3px; margin-bottom: 11px; border-radius: 10px; background: rgba(54,150,255,.8); }
 
-        /* Contenido Principal */
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
         .page-header {
             display: flex;
@@ -132,7 +130,23 @@
         .page-title { margin: 0; color: var(--navy); font-size: 24px; font-weight: 790; letter-spacing: -.8px; }
         .page-subtitle { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 
-        /* Tabla Estilizada */
+        .btn-primary-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            color: #fff;
+            background: linear-gradient(105deg, #1680ff, #075bf0);
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(8,102,245,.19);
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
+        .btn-primary-custom svg { width: 17px; height: 17px; }
+
         .card-table {
             background: #fff;
             border: 1px solid rgba(226,234,244,.9);
@@ -159,6 +173,23 @@
             color: #b25e00;
             background: #fff4e5;
         }
+
+        .action-btns { display: flex; gap: 8px; justify-content: center; }
+        .btn-icon {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            place-items: center;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: #fff;
+            transition: all .2s;
+        }
+        .btn-icon.edit { color: #0866f5; }
+        .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
+        .btn-icon.delete { color: #ff5263; }
+        .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
+        .btn-icon svg { width: 16px; height: 16px; }
 
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
@@ -204,6 +235,10 @@
                 <h1 class="page-title">Inventario de Farmacia e Insumos</h1>
                 <p class="page-subtitle">Control de stock actual y mínimos para tópico y farmacia.</p>
             </div>
+            <button class="btn-primary-custom" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
+                Nuevo Ítem
+            </button>
         </header>
 
         <div class="card-table">
@@ -218,6 +253,7 @@
                             <th>Stock Actual</th>
                             <th>Stock Mín.</th>
                             <th>Estado</th>
+                            <th style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -234,13 +270,23 @@
                             <td><%= i.getStockActual() %></td>
                             <td><%= i.getStockMinimo() %></td>
                             <td><span class="badge"><%= i.getEstado() %></span></td>
+                            <td style="text-align: center;">
+                                <div class="action-btns">
+                                    <button class="btn-icon edit" title="Editar ítem">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </button>
+                                    <button class="btn-icon delete" title="Eliminar ítem">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                         <% 
                                 }
                             } else { 
                         %>
                         <tr>
-                            <td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">No hay insumos o medicamentos registrados en el sistema.</td>
+                            <td colspan="8" style="text-align: center; color: var(--muted); padding: 30px;">No hay insumos o medicamentos registrados en el sistema.</td>
                         </tr>
                         <% } %>
                     </tbody>

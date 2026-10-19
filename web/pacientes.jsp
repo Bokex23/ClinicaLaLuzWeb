@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="app.models.entities.Paciente" %>
+<%@ page import="java.util.List, app.models.entities.Paciente" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,7 +45,7 @@
             flex-direction: column;
             width: var(--sidebar-width);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
             color: #fff;
             background: linear-gradient(160deg, #104875 0%, var(--navy) 42%, var(--navy-deep) 100%);
             box-shadow: 10px 0 35px rgba(9, 40, 72, .08);
@@ -133,7 +132,7 @@
         .page-title { margin: 0; color: var(--navy); font-size: 24px; font-weight: 790; letter-spacing: -.8px; }
         .page-subtitle { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 
-        /* Botón de acción principal */
+        /* Botón de acción principal superior */
         .btn-primary-custom {
             display: inline-flex;
             align-items: center;
@@ -148,7 +147,7 @@
             font-weight: 700;
             transition: transform .2s, box-shadow .2s;
         }
-        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
+        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
         .btn-primary-custom svg { width: 17px; height: 17px; }
 
         /* Tabla Estilizada */
@@ -176,8 +175,27 @@
             border-radius: 99px;
             font-size: 11px;
             font-weight: 650;
+            color: #2ca66b;
+            background: #e8f8ef;
         }
-        .badge-active { color: #2ca66b; background: #e8f8ef; }
+
+        /* Botones de acción en tabla (Editar / Eliminar) */
+        .action-btns { display: flex; gap: 8px; justify-content: center; }
+        .btn-icon {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            place-items: center;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: #fff;
+            transition: all .2s;
+        }
+        .btn-icon.edit { color: #0866f5; }
+        .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
+        .btn-icon.delete { color: #ff5263; }
+        .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
+        .btn-icon svg { width: 16px; height: 16px; }
 
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
@@ -188,7 +206,6 @@
 </head>
 <body>
 <div class="app-shell">
-    <!-- Sidebar -->
     <aside class="sidebar" aria-label="Navegación principal">
         <div class="brand">
             <div class="brand-mark" aria-hidden="true">
@@ -205,69 +222,31 @@
 
         <nav class="nav-area">
             <ul class="nav-list">
-                <li>
-                    <a class="nav-link" href="menuPrincipal.jsp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9.5V21h14V9.5M9 21v-7h6v7"/></svg>
-                        <span>Menú Principal</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="usuarios">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
-                        <span>Gestión de Usuarios</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link is-active" href="pacientes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
-                        <span>Gestión de Pacientes</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="medicos">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
-                        <span>Cuerpo Médico</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="proveedores">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
-                        <span>Proveedores Médicos</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="servicios">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        <span>Servicios Médicos</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="insumos">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                        <span>Farmacia e Insumos</span>
-                    </a>
-                </li>
-                <li class="nav-divider" aria-hidden="true"></li>
-                <li>
-                    <a class="nav-link logout" href="login.jsp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </li>
+                <li><a class="nav-link" href="menuPrincipal.jsp">Menú Principal</a></li>
+                <li><a class="nav-link" href="usuarios">Gestión de Usuarios</a></li>
+                <li><a class="nav-link is-active" href="pacientes">Gestión de Pacientes</a></li>
+                <li><a class="nav-link" href="medicos">Cuerpo Médico</a></li>
+                <li><a class="nav-link" href="proveedores">Proveedores Médicos</a></li>
+                <li><a class="nav-link" href="servicios">Servicios Médicos</a></li>
+                <li><a class="nav-link" href="insumos">Farmacia e Insumos</a></li>
+                <li class="nav-divider"></li>
+                <li><a class="nav-link logout" href="login.jsp">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </aside>
 
-    <!-- Contenido Principal -->
     <main class="main-content">
         <header class="page-header">
             <div>
                 <h1 class="page-title">Gestión de Pacientes</h1>
-                <p class="page-subtitle">Registro, control de historias clínicas y administración de datos de pacientes.</p>
+                <p class="page-subtitle">Registro, control de historias clínicas y administración de datos.</p>
             </div>
+            <button class="btn-primary-custom" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
+                Nuevo Paciente
+            </button>
         </header>
 
-        <!-- Tabla CRUD Dinámica -->
         <div class="card-table">
             <div class="table-container">
                 <table>
@@ -280,30 +259,41 @@
                             <th>Correo</th>
                             <th>Dirección</th>
                             <th>Estado</th>
+                            <th style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% 
+                        <%
                             List<Paciente> lista = (List<Paciente>) request.getAttribute("listaPacientes");
                             if (lista != null && !lista.isEmpty()) {
-                                for (Paciente p : lista) { 
+                                for (Paciente p : lista) {
                         %>
-                            <tr>
-                                <td style="font-weight: 650;"><%= p.getIdPaciente() %></td>
-                                <td style="font-weight: 600;"><%= p.getNombres() %> <%= p.getApellidos() %></td>
-                                <td><%= p.getTipoDocumento() %>: <%= p.getNumeroDocumento() %></td>
-                                <td><%= p.getTelefono() %></td>
-                                <td><%= p.getCorreo() %></td>
-                                <td><%= p.getDireccion() %></td>
-                                <td><span class="badge badge-active"><%= p.getEstado() %></span></td>
-                            </tr>
+                        <tr>
+                            <td style="font-weight: 650;"><%= p.getIdPaciente() %></td>
+                            <td style="font-weight: 600;"><%= p.getNombres() %> <%= p.getApellidos() %></td>
+                            <td><%= p.getTipoDocumento() %>: <%= p.getNumeroDocumento() %></td>
+                            <td><%= p.getTelefono() %></td>
+                            <td><%= p.getCorreo() %></td>
+                            <td><%= p.getDireccion() %></td>
+                            <td><span class="badge"><%= p.getEstado() %></span></td>
+                            <td style="text-align: center;">
+                                <div class="action-btns">
+                                    <button class="btn-icon edit" title="Editar paciente">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </button>
+                                    <button class="btn-icon delete" title="Eliminar paciente">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                         <% 
                                 }
                             } else { 
                         %>
-                            <tr>
-                                <td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">No hay pacientes registrados en el sistema.</td>
-                            </tr>
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--muted); padding: 30px;">No hay pacientes registrados en el sistema.</td>
+                        </tr>
                         <% } %>
                     </tbody>
                 </table>
