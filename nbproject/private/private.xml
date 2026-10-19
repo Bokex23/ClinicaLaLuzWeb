@@ -4,9 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/web/menuPrincipal.jsp</file>
+            <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/src/java/app/controllers/UsuarioServlet.java</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/src/java/app/models/repositories/UsuarioRepository.java</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/web/style.css</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/src/java/app/models/services/AuthService.java</file>
+            <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/web/usuarios.jsp</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/src/java/app/controllers/AuthServlet.java</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/src/java/app/config/ConexionBD.java</file>
             <file>file:/C:/Users/limbe/Documents/NetBeansProjects/ClinicaLaLuzWeb/web/login.jsp</file>
