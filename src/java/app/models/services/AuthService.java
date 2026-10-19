@@ -2,6 +2,7 @@ package app.models.services;
 
 import app.models.entities.Usuario;
 import app.models.repositories.UsuarioRepository;
+import org.mindrot.jbcrypt.BCrypt; // Importación de la nueva librería
 
 public class AuthService {
     private final UsuarioRepository usuarioRepository;
@@ -21,8 +22,8 @@ public class AuthService {
             return "Su cuenta está bloqueada por exceder los intentos fallidos.";
         }
 
-        // Verificamos contraseña (puedes ajustar si usas hash)
-        if (usuario.getContrasenaHash().equals(claveIngresada)) {
+        // Verificamos contraseña encriptada usando jBCrypt
+        if (BCrypt.checkpw(claveIngresada, usuario.getContrasenaHash())) {
             usuario.restablecerIntentos();
             usuarioRepository.actualizarIntentosYEstado(usuario);
             return "Exito";
@@ -39,5 +40,13 @@ public class AuthService {
             usuarioRepository.actualizarIntentosYEstado(usuario);
             return "Contraseña incorrecta. Intentos fallidos: " + intentos + " de 3.";
         }
+    }
+
+    // Método temporal para generar tu hash de prueba.
+    // Clic derecho en este archivo -> "Run File" para ver el hash en la consola.
+    public static void main(String[] args) {
+        String hashGenerado = BCrypt.hashpw("admin123", BCrypt.gensalt());
+        System.out.println("Copia el siguiente texto y ponlo en tu UPDATE de SQL Server:");
+        System.out.println(hashGenerado);
     }
 }
