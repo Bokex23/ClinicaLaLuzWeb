@@ -1,0 +1,32 @@
+name: Deploy prebuilt WAR to Azure Web App - clinicalaluz-web
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+  
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FE606C68E8E1419E8715EAC61A12FA28 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C54195103774451DAA56B3D86275E583 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D479697E499F4CD6BEABA0F244A71412 }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'clinicalaluz-web'
+          slot-name: 'Production'
+          package: 'ROOT.war'
