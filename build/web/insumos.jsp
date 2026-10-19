@@ -110,8 +110,6 @@
         .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
-        .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
-        .sidebar-bottom .tiny-line { width: 42px; height: 3px; margin-bottom: 11px; border-radius: 10px; background: rgba(54,150,255,.8); }
 
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
         .page-header {
@@ -216,15 +214,55 @@
 
         <nav class="nav-area">
             <ul class="nav-list">
-                <li><a class="nav-link" href="menuPrincipal.jsp">Menú Principal</a></li>
-                <li><a class="nav-link" href="usuarios">Gestión de Usuarios</a></li>
-                <li><a class="nav-link" href="pacientes">Gestión de Pacientes</a></li>
-                <li><a class="nav-link" href="medicos">Cuerpo Médico</a></li>
-                <li><a class="nav-link" href="proveedores">Proveedores Médicos</a></li>
-                <li><a class="nav-link" href="servicios">Servicios Médicos</a></li>
-                <li><a class="nav-link is-active" href="insumos">Farmacia e Insumos</a></li>
-                <li class="nav-divider"></li>
-                <li><a class="nav-link logout" href="login.jsp">Cerrar Sesión</a></li>
+                <li>
+                    <a class="nav-link" href="menuPrincipal.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9.5V21h14V9.5M9 21v-7h6v7"/></svg>
+                        <span>Menú Principal</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="usuarios">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
+                        <span>Gestión de Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="pacientes">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Gestión de Pacientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="medicos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+                        <span>Cuerpo Médico</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="proveedores">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
+                        <span>Proveedores Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="servicios">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        <span>Servicios Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link is-active" href="insumos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Farmacia e Insumos</span>
+                    </a>
+                </li>
+                <li class="nav-divider" aria-hidden="true"></li>
+                <li>
+                    <a class="nav-link logout" href="login.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
