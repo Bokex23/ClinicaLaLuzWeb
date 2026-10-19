@@ -222,7 +222,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="usuarios">
-                        <!-- ICONO CORREGIDO PARA GESTIÓN DE USUARIOS -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
@@ -279,8 +278,11 @@
                 <h1 class="page-title">Catálogo de Servicios Médicos</h1>
                 <p class="page-subtitle">Consultas, especialidades y costos tarifarios de la clínica.</p>
             </div>
+            <!-- ICONO CAMBIADO A SIGNO MÁS GENERAL -->
             <button class="btn-primary-custom" type="button">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
                 Nuevo Servicio
             </button>
         </header>
