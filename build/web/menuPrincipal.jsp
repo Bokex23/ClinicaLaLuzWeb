@@ -35,7 +35,7 @@
         button { font: inherit; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra lateral: todos los iconos son SVG incluidos en este mismo archivo. */
+        /* Barra lateral */
         .sidebar {
             position: fixed;
             inset: 0 auto 0 0;
@@ -44,7 +44,7 @@
             flex-direction: column;
             width: var(--sidebar-width);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
             color: #fff;
             background: linear-gradient(160deg, #104875 0%, var(--navy) 42%, var(--navy-deep) 100%);
             box-shadow: 10px 0 35px rgba(9, 40, 72, .08);
@@ -101,7 +101,7 @@
             display: flex;
             align-items: center;
             gap: 13px;
-            min-height: 54px;
+            min-height: 48px;
             padding: 0 16px;
             color: rgba(255,255,255,.76);
             text-decoration: none;
@@ -128,13 +128,13 @@
             border-radius: 0 5px 5px 0;
             background: #fff;
         }
-        .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
+        .nav-divider { height: 1px; margin: 14px 10px 10px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
         .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
         .sidebar-bottom .tiny-line { width: 42px; height: 3px; margin-bottom: 11px; border-radius: 10px; background: rgba(54,150,255,.8); }
 
-        /* Contenido */
+        /* Contenido principal */
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
         .mobile-bar { display: none; }
         .page-header {
@@ -189,7 +189,8 @@
         .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 0 2px 17px; }
         .section-heading h2 { margin: 0; color: #263d5c; font-size: 16px; font-weight: 750; letter-spacing: -.25px; }
         .section-heading p { margin: 5px 0 0; color: #8a97a9; font-size: 12px; }
-        .module-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+        
+        .module-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; margin-bottom: 24px; }
         .module-card {
             --module-color: #0866f5;
             --module-tint: #e8f1ff;
@@ -231,8 +232,11 @@
         .module-card:hover { transform: translateY(-5px); box-shadow: 0 17px 40px rgba(25,56,94,.11); border-color: #d6e4f6; }
         .module-card.primary { border-color: #dce9ff; }
         .module-card.primary::before { opacity: 1; }
-        .module-card.calendar { --module-color: #58748f; --module-tint: #edf3f8; }
-        .module-card.reports { --module-color: #2ca66b; --module-tint: #e8f8ef; }
+        .module-card.medical { --module-color: #00b4d8; --module-tint: #e0f7fa; }
+        .module-card.suppliers { --module-color: #7209b7; --module-tint: #f3e8ff; }
+        .module-card.services { --module-color: #f77f00; --module-tint: #fff3e0; }
+        .module-card.inventory { --module-color: #2ca66b; --module-tint: #e8f8ef; }
+        
         .card-top { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
         .module-icon {
             display: grid;
@@ -250,6 +254,7 @@
         .card-arrow svg { width: 17px; height: 17px; }
         .module-card h3 { position: relative; z-index: 1; margin: 0 0 10px; color: #172b4d; font-size: 18px; line-height: 1.35; font-weight: 760; letter-spacing: -.45px; }
         .module-card p { position: relative; z-index: 1; margin: 0 0 25px; color: #6c7b90; font-size: 13px; line-height: 1.75; }
+        
         .module-action {
             position: relative;
             z-index: 1;
@@ -274,17 +279,9 @@
         }
         .module-action:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
         .module-action svg { width: 17px; height: 17px; }
-        .module-action.disabled {
-            color: #8997a9;
-            background: #f5f7fa;
-            border: 1px solid #e6ebf1;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-        .module-action.disabled:hover { transform: none; box-shadow: none; }
+        
         .card-status { position: relative; z-index: 1; display: flex; align-items: center; gap: 7px; margin: 0 0 15px; color: #8a97a9; font-size: 11px; font-weight: 650; letter-spacing: .25px; text-transform: uppercase; }
         .status-dot { width: 6px; height: 6px; background: #1680ff; border-radius: 50%; box-shadow: 0 0 0 4px #eaf3ff; }
-        .calendar .status-dot, .reports .status-dot { background: #aab6c4; box-shadow: 0 0 0 4px #f1f4f7; }
 
         .page-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 28px 4px 0; color: #98a4b4; font-size: 11px; }
         .footer-brand { display: inline-flex; align-items: center; gap: 7px; }
@@ -292,7 +289,6 @@
 
         @media (max-width: 1200px) {
             .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .module-card:last-child { grid-column: 1 / -1; }
         }
         @media (max-width: 850px) {
             :root { --sidebar-width: 270px; }
@@ -308,25 +304,9 @@
             .menu-toggle { display: grid; width: 42px; height: 42px; place-items: center; color: var(--navy); background: #fff; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
             .menu-toggle svg { width: 21px; height: 21px; }
             .page-header { min-height: 0; padding: 24px; }
-            .page-header::after { right: -60px; }
         }
         @media (max-width: 600px) {
-            .main-content { padding: 14px 13px 24px; }
-            .page-header { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 24px; padding: 22px 20px; border-radius: 18px; }
-            .page-title { font-size: 26px; }
-            .page-subtitle { font-size: 13px; }
-            .admin-pill { padding: 7px 13px 7px 8px; }
-            .admin-avatar { width: 32px; height: 32px; }
-            .section-heading { margin-bottom: 13px; }
             .module-grid { grid-template-columns: 1fr; gap: 15px; }
-            .module-card:last-child { grid-column: auto; }
-            .module-card { min-height: 315px; padding: 23px 21px 21px; }
-            .card-top { margin-bottom: 20px; }
-            .module-card h3 { font-size: 18px; }
-            .page-footer { align-items: flex-start; flex-direction: column; gap: 8px; margin-top: 23px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
         }
     </style>
 </head>
@@ -357,10 +337,39 @@
                     </a>
                 </li>
                 <li>
-                    <!-- ENLACE CORREGIDO AL SERVLET -->
                     <a class="nav-link" href="usuarios">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
                         <span>Gestión de Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="pacientes">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Gestión de Pacientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="medicos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
+                        <span>Cuerpo Médico</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="proveedores">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
+                        <span>Proveedores Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="servicios">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        <span>Servicios Médicos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="insumos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Farmacia e Insumos</span>
                     </a>
                 </li>
                 <li class="nav-divider" aria-hidden="true"></li>
@@ -414,7 +423,9 @@
                 </div>
             </div>
 
+            <!-- Grilla de Módulos (Gestión de Usuarios + Módulos Etapa 5) -->
             <div class="module-grid">
+                <!-- 1. Gestión de Usuarios -->
                 <article class="module-card primary">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
@@ -425,37 +436,95 @@
                     <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
                     <h3>Gestión de Usuarios</h3>
                     <p>Administre cuentas de acceso, roles corporativos, credenciales y estados de seguridad del personal.</p>
-                    <!-- ENLACE CORREGIDO AL SERVLET -->
                     <a href="usuarios" class="module-action">
                         Acceder al Módulo
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                     </a>
                 </article>
 
-                <article class="module-card calendar">
+                <!-- 2. Gestión de Pacientes -->
+                <article class="module-card medical">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18m-13 5 2 2 4-4"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
                         </div>
                         <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
                     </div>
-                    <div class="card-status"><span class="status-dot"></span> En preparación</div>
-                    <h3>Citas Médicas</h3>
-                    <p>Control y programación centralizada de citas, especialidades y atención de pacientes.</p>
-                    <button class="module-action disabled" type="button" disabled>Próximamente</button>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Gestión de Pacientes</h3>
+                    <p>Registro, control de historias clínicas y administración de datos de pacientes de la clínica.</p>
+                    <a href="pacientes" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
                 </article>
 
-                <article class="module-card reports">
+                <!-- 3. Cuerpo Médico -->
+                <article class="module-card medical">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9h9A9 9 0 1 1 12 3Z"/><path d="M16 3.7A9 9 0 0 1 21 9h-5V3.7Z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
                         </div>
                         <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
                     </div>
-                    <div class="card-status"><span class="status-dot"></span> En preparación</div>
-                    <h3>Reportería y Logs</h3>
-                    <p>Supervisión de auditorías, intentos fallidos de acceso y reportes exportables a Excel.</p>
-                    <button class="module-action disabled" type="button" disabled>Próximamente</button>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Cuerpo Médico</h3>
+                    <p>Supervisión del personal médico, especialidades y códigos CMP vinculados al sistema.</p>
+                    <a href="medicos" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                </article>
+
+                <!-- 4. Proveedores Médicos -->
+                <article class="module-card suppliers">
+                    <div class="card-top">
+                        <div class="module-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
+                        </div>
+                        <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                    </div>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Proveedores Médicos</h3>
+                    <p>Gestión de laboratorios farmacéuticos, distribuidores y equipamiento médico con RUC.</p>
+                    <a href="proveedores" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                </article>
+
+                <!-- 5. Servicios Médicos -->
+                <article class="module-card services">
+                    <div class="card-top">
+                        <div class="module-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                    </div>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Servicios Médicos</h3>
+                    <p>Catálogo de consultas, especialidades, exámenes y costos tarifarios de la clínica.</p>
+                    <a href="servicios" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                </article>
+
+                <!-- 6. Farmacia e Insumos -->
+                <article class="module-card inventory">
+                    <div class="card-top">
+                        <div class="module-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        </div>
+                        <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                    </div>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Farmacia e Insumos</h3>
+                    <p>Control de inventario de medicamentos, stock actual y mínimos para tópico y farmacia.</p>
+                    <a href="insumos" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
                 </article>
             </div>
         </section>
