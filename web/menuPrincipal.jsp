@@ -357,7 +357,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link" href="usuarios.jsp">
+                    <!-- ENLACE CORREGIDO AL SERVLET -->
+                    <a class="nav-link" href="usuarios">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
                         <span>Gestión de Usuarios</span>
                     </a>
@@ -424,7 +425,8 @@
                     <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
                     <h3>Gestión de Usuarios</h3>
                     <p>Administre cuentas de acceso, roles corporativos, credenciales y estados de seguridad del personal.</p>
-                    <a href="usuarios.jsp" class="module-action">
+                    <!-- ENLACE CORREGIDO AL SERVLET -->
+                    <a href="usuarios" class="module-action">
                         Acceder al Módulo
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                     </a>

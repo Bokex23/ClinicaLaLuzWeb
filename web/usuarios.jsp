@@ -230,7 +230,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link is-active" href="usuarios.jsp">
+                    <!-- ENLACE CORREGIDO AL SERVLET -->
+                    <a class="nav-link is-active" href="usuarios">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M20 8v6m-3-3h6M16.5 4.5a4 4 0 0 1 0 7.8M17 15h1a3 3 0 0 1 3 3v1"/></svg>
                         <span>Gestión de Usuarios</span>
                     </a>
@@ -282,7 +283,7 @@
                             <tr>
                                 <td style="font-weight: 650;"><%= u.getIdUsuario() %></td>
                                 <td style="font-weight: 600;"><%= u.getNombreUsuario() %></td>
-                                <rd><span class="badge badge-admin">Rol ID: <%= u.getIdRol() %></span></td>
+                                <td><span class="badge badge-admin">Rol ID: <%= u.getIdRol() %></span></td>
                                 <td><span class="badge badge-active"><%= u.getEstado() %></span></td>
                                 <td><%= u.getIntentosFallidos() %></td>
                                 <td style="text-align: center;">
@@ -301,7 +302,7 @@
                             } else { 
                         %>
                             <tr>
-                                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados o el Servlet no ha inicializado la lista. (Asegúrate de ingresar mediante <a href="usuarios" style="color: var(--blue);">/usuarios</a>)</td>
+                                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados en el sistema.</td>
                             </tr>
                         <% } %>
                     </tbody>
