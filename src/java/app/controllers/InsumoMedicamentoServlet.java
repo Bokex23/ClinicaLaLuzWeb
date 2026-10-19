@@ -18,6 +18,6 @@ public class InsumoMedicamentoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<InsumoMedicamento> lista = insumoRepository.listarTodos();
         request.setAttribute("listaInsumos", lista);
-        request.getRequestDispatcher("vistas/insumos.jsp").forward(request, response);
+        request.getRequestDispatcher("insumos.jsp").forward(request, response);
     }
 }

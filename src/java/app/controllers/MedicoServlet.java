@@ -18,6 +18,6 @@ public class MedicoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Medico> lista = medicoRepository.listarTodos();
         request.setAttribute("listaMedicos", lista);
-        request.getRequestDispatcher("vistas/medicos.jsp").forward(request, response);
+        request.getRequestDispatcher("medicos.jsp").forward(request, response);
     }
 }
