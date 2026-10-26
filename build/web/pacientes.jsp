@@ -233,7 +233,6 @@
                 </li>
                 <li>
                     <a class="nav-link is-active" href="pacientes">
-                        <!-- ICONO DE PACIENTES ENDEREZADO SIN CAMBIAR SU FORMA -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -288,9 +287,12 @@
                 <h1 class="page-title">Gestión de Pacientes</h1>
                 <p class="page-subtitle">Registro, control de historias clínicas y administración de datos.</p>
             </div>
+            <!-- BOTÓN ACTUALIZADO CON ICONO PROFESIONAL -->
             <button class="btn-primary-custom" type="button">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 5v14M5 12h14"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9.5" cy="7" r="4"/>
+                    <path d="M19 11v6m-3-3h6"/>
                 </svg>
                 Nuevo Paciente
             </button>
