@@ -12,7 +12,7 @@ import java.util.List;
 public class UsuarioRepository {
 
     public UsuarioRepository() {
-        // Ya no guardamos una conexión global estática para evitar que caduque en Azure
+        // Constructor vacío
     }
 
     private Connection obtenerConexion() throws SQLException {
@@ -87,6 +87,11 @@ public class UsuarioRepository {
         String sql = "INSERT INTO Usuarios (nombre_usuario, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?)";
         try (Connection conexion = obtenerConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
+            
+            if (!conexion.getAutoCommit()) {
+                conexion.setAutoCommit(true);
+            }
+
             ps.setString(1, usuario.getNombreUsuario());
             ps.setString(2, usuario.getContrasenaHash());
             ps.setInt(3, usuario.getIdRol());
@@ -104,6 +109,11 @@ public class UsuarioRepository {
         String sql = "UPDATE Usuarios SET nombre_usuario = ?, id_rol = ?, estado = ? WHERE id_usuario = ?";
         try (Connection conexion = obtenerConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
+            
+            if (!conexion.getAutoCommit()) {
+                conexion.setAutoCommit(true);
+            }
+
             ps.setString(1, usuario.getNombreUsuario());
             ps.setInt(2, usuario.getIdRol());
             ps.setString(3, usuario.getEstado());
@@ -120,6 +130,11 @@ public class UsuarioRepository {
         String sql = "DELETE FROM Usuarios WHERE id_usuario = ?";
         try (Connection conexion = obtenerConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
+            
+            if (!conexion.getAutoCommit()) {
+                conexion.setAutoCommit(true);
+            }
+
             ps.setInt(1, idUsuario);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
