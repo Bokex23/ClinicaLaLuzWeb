@@ -19,13 +19,8 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Obtenemos la lista de usuarios desde el repositorio (conectado a Azure)
         List<Usuario> listaUsuarios = usuarioRepository.listarTodos();
-        
-        // Guardamos la lista en los atributos de la petición
         request.setAttribute("listaUsuarios", listaUsuarios);
-        
-        // Redirigimos hacia la vista del CRUD
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }
 
@@ -36,7 +31,6 @@ public class UsuarioServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");
 
-        // Si no viene una acción específica, por defecto hacemos el comportamiento anterior o redirigimos
         if (accion == null) {
             doGet(request, response);
             return;
@@ -50,21 +44,17 @@ public class UsuarioServlet extends HttpServlet {
 
             Usuario u = new Usuario();
             u.setNombreUsuario(nombre);
-            u.setContrasenaHash(password); // Usando el campo de tu entidad
+            u.setContrasenaHash(password);
             u.setIdRol(rol);
             u.setEstado(estado);
             u.setIntentosFallidos(0);
 
             boolean exito = usuarioRepository.registrar(u);
-            
-            // Redireccionamos para actualizar la tabla
             response.sendRedirect("usuarios");
 
         } else if ("eliminar".equals(accion)) {
             int id = Integer.parseInt(request.getParameter("id"));
             usuarioRepository.eliminar(id);
-            
-            // Redireccionamos para actualizar la tabla
             response.sendRedirect("usuarios");
         } else {
             doGet(request, response);
