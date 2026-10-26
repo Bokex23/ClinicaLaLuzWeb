@@ -236,6 +236,7 @@
         .module-card.suppliers { --module-color: #7209b7; --module-tint: #f3e8ff; }
         .module-card.services { --module-color: #f77f00; --module-tint: #fff3e0; }
         .module-card.inventory { --module-color: #2ca66b; --module-tint: #e8f8ef; }
+        .module-card.sales { --module-color: #0d6efd; --module-tint: #cfe2ff; }
         
         .card-top { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
         .module-icon {
@@ -349,7 +350,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="pacientes">
-                        <!-- ICONO DE PACIENTES ENDEREZADO SIN CAMBIAR SU FORMA ORIGINAL -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -379,6 +379,12 @@
                     <a class="nav-link" href="insumos">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
                         <span>Farmacia e Insumos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="atencionesVentas">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        <span>Atenciones y Ventas</span>
                     </a>
                 </li>
                 <li class="nav-divider" aria-hidden="true"></li>
@@ -459,7 +465,7 @@
                     </a>
                 </article>
 
-                <!-- 2. Gestión de Pacientes (ICONO ENDEREZADO SIN CAMBIAR FORMA) -->
+                <!-- 2. Gestión de Pacientes -->
                 <article class="module-card medical">
                     <div class="card-top">
                         <div class="module-icon" aria-hidden="true">
@@ -542,6 +548,23 @@
                     <h3>Farmacia e Insumos</h3>
                     <p>Control de inventario de medicamentos, stock actual y mínimos para tópico y farmacia.</p>
                     <a href="insumos" class="module-action">
+                        Acceder al Módulo
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                </article>
+
+                <!-- 7. Atenciones y Ventas -->
+                <article class="module-card sales">
+                    <div class="card-top">
+                        <div class="module-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        </div>
+                        <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                    </div>
+                    <div class="card-status"><span class="status-dot"></span> Módulo disponible</div>
+                    <h3>Atenciones y Ventas</h3>
+                    <p>Gestión de caja, registro de atenciones clínicas, comprobantes de pago y emisión de boletas/facturas.</p>
+                    <a href="atencionesVentas" class="module-action">
                         Acceder al Módulo
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                     </a>
