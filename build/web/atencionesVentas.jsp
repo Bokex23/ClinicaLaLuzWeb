@@ -42,16 +42,16 @@
             </div>
         </div>
         <ul class="menu-list">
-            <li><a href="${pageContext.request.contextPath}/dashboard.jsp"><i class="fa-solid fa-house"></i> Menú Principal</a></li>
+            <li><a href="${pageContext.request.contextPath}/menuPrincipal.jsp"><i class="fa-solid fa-house"></i> Menú Principal</a></li>
             <li><a href="${pageContext.request.contextPath}/usuarios"><i class="fa-solid fa-user-gear"></i> Gestión de Usuarios</a></li>
             <li><a href="${pageContext.request.contextPath}/pacientes"><i class="fa-solid fa-hospital-user"></i> Gestión de Pacientes</a></li>
-            <li><a href="${pageContext.request.contextPath}/cuerpoMedico"><i class="fa-solid fa-user-doctor"></i> Cuerpo Médico</a></li>
+            <li><a href="${pageContext.request.contextPath}/medicos"><i class="fa-solid fa-user-doctor"></i> Cuerpo Médico</a></li>
             <li><a href="${pageContext.request.contextPath}/proveedores"><i class="fa-solid fa-truck-medical"></i> Proveedores Médicos</a></li>
             <li><a href="${pageContext.request.contextPath}/servicios"><i class="fa-solid fa-notes-medical"></i> Servicios Médicos</a></li>
             <li class="active"><a href="${pageContext.request.contextPath}/atencionesVentas"><i class="fa-solid fa-cash-register"></i> Farmacia e Insumos / Ventas</a></li>
         </ul>
         <div class="logout">
-            <a href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+            <a href="${pageContext.request.contextPath}/login.jsp"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
         </div>
     </div>
 
