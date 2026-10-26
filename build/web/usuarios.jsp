@@ -147,6 +147,7 @@
             font-size: 13px;
             font-weight: 700;
             transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
         }
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
         .btn-primary-custom svg { width: 17px; height: 17px; }
@@ -191,6 +192,7 @@
             border: 1px solid var(--line);
             background: #fff;
             transition: all .2s;
+            cursor: pointer;
         }
         .btn-icon.edit { color: #0866f5; }
         .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
@@ -198,7 +200,7 @@
         .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
         .btn-icon svg { width: 16px; height: 16px; }
 
-        /* Estilos del Modal Flotante (NUEVO) */
+        /* Estilos de Modales Flotantes */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(8, 43, 75, 0.4); backdrop-filter: blur(4px);
             display: none; place-items: center; z-index: 100;
@@ -208,4 +210,208 @@
         .modal-header { padding: 20px 24px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h3 { margin: 0; color: var(--navy); font-size: 18px; }
         .btn-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
-        .
+        .modal-body { padding: 24px; display: grid; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; font-weight: 650; color: var(--navy); }
+        .form-group input, .form-group select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; outline: none; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafdfd; }
+        .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; cursor: pointer; }
+
+        @media (max-width: 850px) {
+            :root { --sidebar-width: 0px; }
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Navegación principal">
+        <div class="brand">
+            <div class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4H10v17M10 8h4m-2-2v4M14 21V3.5A1.5 1.5 0 0 1 15.5 2H19a1 1 0 0 1 1 1v18M2 21h20"/>
+                    <path d="M6.5 8h.01M6.5 12h.01M6.5 16h.01M17 7h.01M17 11h.01M17 15h.01" stroke-width="2.4"/>
+                </svg>
+            </div>
+            <div>
+                <p class="brand-name">Clínica La Luz</p>
+                <p class="brand-caption">Portal Administrativo</p>
+            </div>
+        </div>
+
+        <nav class="nav-area">
+            <ul class="nav-list">
+                <li><a class="nav-link" href="menuPrincipal.jsp"><span>Menú Principal</span></a></li>
+                <li><a class="nav-link is-active" href="usuarios"><span>Gestión de Usuarios</span></a></li>
+                <li><a class="nav-link" href="pacientes"><span>Gestión de Pacientes</span></a></li>
+                <li><a class="nav-link" href="medicos"><span>Cuerpo Médico</span></a></li>
+                <li><a class="nav-link" href="proveedores"><span>Proveedores Médicos</span></a></li>
+                <li><a class="nav-link" href="servicios"><span>Servicios Médicos</span></a></li>
+                <li><a class="nav-link" href="insumos"><span>Farmacia e Insumos</span></a></li>
+                <li><a class="nav-link" href="atencionesVentas"><span>Atenciones y Ventas</span></a></li>
+                <li class="nav-divider" aria-hidden="true"></li>
+                <li><a class="nav-link logout" href="login.jsp"><span>Cerrar Sesión</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">Gestión de Usuarios</h1>
+                <p class="page-subtitle">Administración de cuentas, credenciales y roles del sistema.</p>
+            </div>
+            <!-- Botón con evento onclick añadido para abrir el modal de registro -->
+            <button class="btn-primary-custom" type="button" onclick="document.getElementById('modalUsuario').classList.add('show')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
+                Nuevo Usuario
+            </button>
+        </header>
+
+        <!-- Tabla CRUD Dinámica -->
+        <div class="card-table">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Intentos Fallidos</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                            List<Usuario> lista = (List<Usuario>) request.getAttribute("listaUsuarios");
+                            if (lista != null && !lista.isEmpty()) {
+                                for (Usuario u : lista) { 
+                        %>
+                            <tr>
+                                <td style="font-weight: 650;"><%= u.getIdUsuario() %></td>
+                                <td style="font-weight: 600;"><%= u.getNombreUsuario() %></td>
+                                <td><span class="badge badge-admin">Rol ID: <%= u.getIdRol() %></span></td>
+                                <td><span class="badge badge-active"><%= u.getEstado() %></span></td>
+                                <td><%= u.getIntentosFallidos() %></td>
+                                <td style="text-align: center;">
+                                    <div class="action-btns">
+                                        <!-- Botón Editar (Lápiz) conectado a la función abrirEditar -->
+                                        <button type="button" class="btn-icon edit" title="Editar usuario" 
+                                            onclick="abrirEditar('<%= u.getIdUsuario() %>', '<%= u.getNombreUsuario() %>', '<%= u.getIdRol() %>', '<%= u.getEstado() %>')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                        </button>
+
+                                        <!-- Botón Eliminar (Tacho) dentro de un formulario POST -->
+                                        <form action="usuarios" method="POST" style="display:inline;">
+                                            <input type="hidden" name="accion" value="eliminar">
+                                            <input type="hidden" name="id" value="<%= u.getIdUsuario() %>">
+                                            <button type="submit" class="btn-icon delete" title="Eliminar usuario" onclick="return confirm('¿Desea eliminar este usuario?');">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% 
+                                }
+                            } else { 
+                        %>
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados en el sistema.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Registrar Nuevo Usuario -->
+    <div class="modal-overlay" id="modalUsuario">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Registrar Nuevo Usuario</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalUsuario').classList.remove('show')">&times;</button>
+            </div>
+            <form action="usuarios" method="POST">
+                <input type="hidden" name="accion" value="registrar">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombre de Usuario</label>
+                        <input type="text" name="nombreUsuario" required placeholder="Ej: admin_clinica">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="contrasena" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>ID Rol</label>
+                        <input type="number" name="idRol" required placeholder="Ej: 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalUsuario').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Usuario -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Usuario</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEditar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="usuarios" method="POST">
+                <input type="hidden" name="accion" value="actualizar">
+                <input type="hidden" name="idUsuario" id="editIdUsuario">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombre de Usuario</label>
+                        <input type="text" name="nombreUsuario" id="editNombreUsuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ID Rol</label>
+                        <input type="number" name="idRol" id="editIdRol" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado" id="editEstado">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEditar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function abrirEditar(id, nombre, rol, estado) {
+        document.getElementById('editIdUsuario').value = id;
+        document.getElementById('editNombreUsuario').value = nombre;
+        document.getElementById('editIdRol').value = rol;
+        document.getElementById('editEstado').value = estado;
+        document.getElementById('modalEditar').classList.add('show');
+    }
+</script>
+</body>
+</html>

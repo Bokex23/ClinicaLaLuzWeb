@@ -49,7 +49,22 @@ public class UsuarioServlet extends HttpServlet {
             u.setEstado(estado);
             u.setIntentosFallidos(0);
 
-            boolean exito = usuarioRepository.registrar(u);
+            usuarioRepository.registrar(u);
+            response.sendRedirect("usuarios");
+
+        } else if ("actualizar".equals(accion)) {
+            int id = Integer.parseInt(request.getParameter("idUsuario"));
+            String nombre = request.getParameter("nombreUsuario");
+            int rol = Integer.parseInt(request.getParameter("idRol"));
+            String estado = request.getParameter("estado");
+
+            Usuario u = new Usuario();
+            u.setIdUsuario(id);
+            u.setNombreUsuario(nombre);
+            u.setIdRol(rol);
+            u.setEstado(estado);
+
+            usuarioRepository.actualizar(u);
             response.sendRedirect("usuarios");
 
         } else if ("eliminar".equals(accion)) {
