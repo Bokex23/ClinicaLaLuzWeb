@@ -1,7 +1,7 @@
 package app.models.repositories;
 
 import app.models.entities.AtencionVenta;
-import app.config.ConexionBD; // <-- Apunta correctamente a tu paquete app.config
+import app.config.ConexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,15 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AtencionVentaRepository {
+    private final Connection conexion;
 
-    // Método para listar todas las atenciones / ventas registradas en la clínica
+    public AtencionVentaRepository() {
+        this.conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+    }
+
     public List<AtencionVenta> listarTodas() {
         List<AtencionVenta> lista = new ArrayList<>();
         String sql = "SELECT id_venta, id_paciente, id_usuario, subtotal, igv, total, estado, fecha_venta FROM Atenciones_Ventas";
 
-        // Usamos tu método correcto: obtenerInstancia() y obtenerConexion()
-        try (Connection con = ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -30,7 +32,7 @@ public class AtencionVentaRepository {
                 venta.setIgv(rs.getDouble("igv"));
                 venta.setTotal(rs.getDouble("total"));
                 venta.setEstado(rs.getString("estado"));
-                venta.setFechaVenta(rs.getString("fecha_venta")); // Captura la fecha en formato latinoamericano
+                venta.setFechaVenta(rs.getString("fecha_venta"));
                 
                 lista.add(venta);
             }
@@ -40,13 +42,10 @@ public class AtencionVentaRepository {
         return lista;
     }
 
-    // Método para registrar una nueva venta / atención médica
     public boolean insertar(AtencionVenta venta) {
         String sql = "INSERT INTO Atenciones_Ventas (id_paciente, id_usuario, subtotal, igv, total, estado) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = ConexionBD.obtenerInstancia().obtenerConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, venta.getIdPaciente());
             ps.setInt(2, venta.getIdUsuario());
             ps.setDouble(3, venta.getSubtotal());
