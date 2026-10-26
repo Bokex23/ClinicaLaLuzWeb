@@ -38,16 +38,14 @@ public class UsuarioServlet extends HttpServlet {
 
         if ("registrar".equals(accion)) {
             String nombre = request.getParameter("nombreUsuario");
+            String email = request.getParameter("email"); // Captura el email ingresado en el modal
             String password = request.getParameter("contrasena");
             int rol = Integer.parseInt(request.getParameter("idRol"));
             String estado = request.getParameter("estado");
 
-            // Generar correo corporativo automático para cumplir con el NOT NULL de la BD
-            String emailGenerado = nombre.toLowerCase().replaceAll("\\s+", "") + "@clinicalaluz.com";
-
             Usuario u = new Usuario();
             u.setNombreUsuario(nombre);
-            u.setEmail(emailGenerado);
+            u.setEmail(email); // Asigna el email real del formulario
             u.setContrasenaHash(password);
             u.setIdRol(rol);
             u.setEstado(estado);
