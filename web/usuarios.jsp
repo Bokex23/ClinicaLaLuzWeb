@@ -264,7 +264,6 @@
                 <h1 class="page-title">Gestión de Usuarios</h1>
                 <p class="page-subtitle">Administración de cuentas, credenciales y roles del sistema.</p>
             </div>
-            <!-- Botón con evento onclick añadido para abrir el modal de registro -->
             <button class="btn-primary-custom" type="button" onclick="document.getElementById('modalUsuario').classList.add('show')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
                 Nuevo Usuario
@@ -301,13 +300,13 @@
                                 <td><%= u.getIntentosFallidos() %></td>
                                 <td style="text-align: center;">
                                     <div class="action-btns">
-                                        <!-- Botón Editar (Lápiz) conectado a la función abrirEditar -->
+                                        <!-- Botón Editar -->
                                         <button type="button" class="btn-icon edit" title="Editar usuario" 
                                             onclick="abrirEditar('<%= u.getIdUsuario() %>', '<%= u.getNombreUsuario() %>', '<%= u.getIdRol() %>', '<%= u.getEstado() %>')">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </button>
 
-                                        <!-- Botón Eliminar (Tacho) dentro de un formulario POST -->
+                                        <!-- Botón Eliminar -->
                                         <form action="usuarios" method="POST" style="display:inline;">
                                             <input type="hidden" name="accion" value="eliminar">
                                             <input type="hidden" name="id" value="<%= u.getIdUsuario() %>">
@@ -332,7 +331,7 @@
         </div>
     </main>
 
-    <!-- Modal para Registrar Nuevo Usuario -->
+    <!-- Modal para Registrar Nuevo Usuario (Con campo Email añadido) -->
     <div class="modal-overlay" id="modalUsuario">
         <div class="modal-card">
             <div class="modal-header">
@@ -345,6 +344,10 @@
                     <div class="form-group">
                         <label>Nombre de Usuario</label>
                         <input type="text" name="nombreUsuario" required placeholder="Ej: admin_clinica">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico (Email)</label>
+                        <input type="email" name="email" required placeholder="Ej: admin@clinicalaluz.com">
                     </div>
                     <div class="form-group">
                         <label>Contraseña</label>
