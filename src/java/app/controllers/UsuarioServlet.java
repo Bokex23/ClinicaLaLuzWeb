@@ -32,6 +32,42 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        String accion = request.getParameter("accion");
+
+        // Si no viene una acción específica, por defecto hacemos el comportamiento anterior o redirigimos
+        if (accion == null) {
+            doGet(request, response);
+            return;
+        }
+
+        if ("registrar".equals(accion)) {
+            String nombre = request.getParameter("nombreUsuario");
+            String password = request.getParameter("contrasena");
+            int rol = Integer.parseInt(request.getParameter("idRol"));
+            String estado = request.getParameter("estado");
+
+            Usuario u = new Usuario();
+            u.setNombreUsuario(nombre);
+            u.setContrasenaHash(password); // Usando el campo de tu entidad
+            u.setIdRol(rol);
+            u.setEstado(estado);
+            u.setIntentosFallidos(0);
+
+            boolean exito = usuarioRepository.registrar(u);
+            
+            // Redireccionamos para actualizar la tabla
+            response.sendRedirect("usuarios");
+
+        } else if ("eliminar".equals(accion)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            usuarioRepository.eliminar(id);
+            
+            // Redireccionamos para actualizar la tabla
+            response.sendRedirect("usuarios");
+        } else {
+            doGet(request, response);
+        }
     }
 }
