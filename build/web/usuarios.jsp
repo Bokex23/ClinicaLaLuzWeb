@@ -37,7 +37,6 @@
         button { font: inherit; cursor: pointer; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra lateral idéntica */
         .sidebar {
             position: fixed;
             inset: 0 auto 0 0;
@@ -112,10 +111,7 @@
         .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
-        .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
-        .sidebar-bottom .tiny-line { width: 42px; height: 3px; margin-bottom: 11px; border-radius: 10px; background: rgba(54,150,255,.8); }
 
-        /* Contenido Principal */
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
         .page-header {
             display: flex;
@@ -133,7 +129,6 @@
         .page-title { margin: 0; color: var(--navy); font-size: 24px; font-weight: 790; letter-spacing: -.8px; }
         .page-subtitle { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 
-        /* Botón de acción principal */
         .btn-primary-custom {
             display: inline-flex;
             align-items: center;
@@ -151,7 +146,6 @@
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
         .btn-primary-custom svg { width: 17px; height: 17px; }
 
-        /* Tabla Estilizada */
         .card-table {
             background: #fff;
             border: 1px solid rgba(226,234,244,.9);
@@ -167,7 +161,6 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #fafdfd; }
 
-        /* Badges de estado y roles */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -180,7 +173,6 @@
         .badge-admin { color: #0866f5; background: #e8f1ff; }
         .badge-active { color: #2ca66b; background: #e8f8ef; }
 
-        /* Botones de acción en tabla */
         .action-btns { display: flex; gap: 8px; justify-content: center; }
         .btn-icon {
             display: grid;
@@ -207,7 +199,6 @@
 </head>
 <body>
 <div class="app-shell">
-    <!-- Sidebar -->
     <aside class="sidebar" aria-label="Navegación principal">
         <div class="brand">
             <div class="brand-mark" aria-hidden="true">
@@ -232,7 +223,6 @@
                 </li>
                 <li>
                     <a class="nav-link is-active" href="usuarios">
-                        <!-- ICONO CORREGIDO -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
@@ -244,7 +234,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="pacientes">
-                        <!-- ICONO DE PACIENTES ENDEREZADO -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -293,7 +282,6 @@
         </nav>
     </aside>
 
-    <!-- Contenido Principal -->
     <main class="main-content">
         <header class="page-header">
             <div>
@@ -306,7 +294,6 @@
             </button>
         </header>
 
-        <!-- Tabla CRUD Dinámica -->
         <div class="card-table">
             <div class="table-container">
                 <table>
