@@ -3,6 +3,7 @@ package app.models.entities;
 public class Usuario {
     private int idUsuario;
     private String nombreUsuario;
+    private String email;
     private String contrasenaHash;
     private int idRol;
     private String estado;
@@ -28,6 +29,9 @@ public class Usuario {
 
     public String getNombreUsuario() { return nombreUsuario; }
     public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getContrasenaHash() { return contrasenaHash; }
     public void setContrasenaHash(String contrasenaHash) { this.contrasenaHash = contrasenaHash; }

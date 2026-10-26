@@ -26,6 +26,7 @@ public class UsuarioRepository {
                     usr = new Usuario();
                     usr.setIdUsuario(rs.getInt("id_usuario"));
                     usr.setNombreUsuario(rs.getString("nombre_usuario"));
+                    usr.setEmail(rs.getString("email"));
                     usr.setContrasenaHash(rs.getString("contrasena_hash"));
                     usr.setIdRol(rs.getInt("id_rol"));
                     usr.setEstado(rs.getString("estado"));
@@ -66,6 +67,7 @@ public class UsuarioRepository {
                 Usuario usr = new Usuario();
                 usr.setIdUsuario(rs.getInt("id_usuario"));
                 usr.setNombreUsuario(rs.getString("nombre_usuario"));
+                usr.setEmail(rs.getString("email"));
                 usr.setContrasenaHash(rs.getString("contrasena_hash"));
                 usr.setIdRol(rs.getInt("id_rol"));
                 usr.setEstado(rs.getString("estado"));
@@ -78,9 +80,9 @@ public class UsuarioRepository {
         return lista;
     }
 
-    // 2. REGISTRAR UN NUEVO USUARIO (Con AutoCommit forzado para Azure)
+    // 2. REGISTRAR UN NUEVO USUARIO
     public boolean registrar(Usuario usuario) {
-        String sql = "INSERT INTO Usuarios (nombre_usuario, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Usuarios (nombre_usuario, email, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
             
@@ -90,10 +92,11 @@ public class UsuarioRepository {
 
             try (PreparedStatement ps = conexion.prepareStatement(sql)) {
                 ps.setString(1, usuario.getNombreUsuario());
-                ps.setString(2, usuario.getContrasenaHash());
-                ps.setInt(3, usuario.getIdRol());
-                ps.setString(4, usuario.getEstado());
-                ps.setInt(5, usuario.getIntentosFallidos());
+                ps.setString(2, usuario.getEmail()); // Limpio y directo desde la entidad
+                ps.setString(3, usuario.getContrasenaHash());
+                ps.setInt(4, usuario.getIdRol());
+                ps.setString(5, usuario.getEstado());
+                ps.setInt(6, usuario.getIntentosFallidos());
                 
                 return ps.executeUpdate() > 0;
             }

@@ -42,8 +42,12 @@ public class UsuarioServlet extends HttpServlet {
             int rol = Integer.parseInt(request.getParameter("idRol"));
             String estado = request.getParameter("estado");
 
+            // Generar correo corporativo automático para cumplir con el NOT NULL de la BD
+            String emailGenerado = nombre.toLowerCase().replaceAll("\\s+", "") + "@clinicalaluz.com";
+
             Usuario u = new Usuario();
             u.setNombreUsuario(nombre);
+            u.setEmail(emailGenerado);
             u.setContrasenaHash(password);
             u.setIdRol(rol);
             u.setEstado(estado);
@@ -71,6 +75,7 @@ public class UsuarioServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             usuarioRepository.eliminar(id);
             response.sendRedirect("usuarios");
+            
         } else {
             doGet(request, response);
         }
