@@ -12,7 +12,7 @@ import java.util.List;
 public class UsuarioRepository {
 
     public UsuarioRepository() {
-        // Dejamos el constructor limpio para que cada método obtenga la conexión activa
+        // Constructor vacío
     }
 
     public Usuario buscarPorUsuario(String nombreUsuario) {
@@ -78,19 +78,32 @@ public class UsuarioRepository {
         return lista;
     }
 
-    // 2. REGISTRAR UN NUEVO USUARIO
+    // 2. REGISTRAR UN NUEVO USUARIO (Con depuración detallada)
     public boolean registrar(Usuario usuario) {
         String sql = "INSERT INTO Usuarios (nombre_usuario, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?)";
         Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        
+        if (conexion == null) {
+            System.err.println("¡ERROR CRÍTICO: La conexión a la base de datos es NULL!");
+            return false;
+        }
+
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombreUsuario());
             ps.setString(2, usuario.getContrasenaHash());
             ps.setInt(3, usuario.getIdRol());
             ps.setString(4, usuario.getEstado());
             ps.setInt(5, usuario.getIntentosFallidos());
-            return ps.executeUpdate() > 0;
+            
+            int filasAfectadas = ps.executeUpdate();
+            System.out.println("¡REGISTRO EXITOSO! Filas afectadas: " + filasAfectadas);
+            return filasAfectadas > 0;
+            
         } catch (SQLException e) {
-            System.err.println("Error al registrar usuario: " + e.getMessage());
+            System.err.println("--- ERROR SQL EXACTO AL REGISTRAR ---");
+            System.err.println("Código de error: " + e.getErrorCode());
+            System.err.println("Estado SQL: " + e.getSQLState());
+            System.err.println("Mensaje detallado: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
