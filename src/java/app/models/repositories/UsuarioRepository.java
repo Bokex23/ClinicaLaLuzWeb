@@ -78,32 +78,27 @@ public class UsuarioRepository {
         return lista;
     }
 
-    // 2. REGISTRAR UN NUEVO USUARIO (Con depuración detallada)
+    // 2. REGISTRAR UN NUEVO USUARIO (Con AutoCommit forzado para Azure)
     public boolean registrar(Usuario usuario) {
         String sql = "INSERT INTO Usuarios (nombre_usuario, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?)";
-        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
-        
-        if (conexion == null) {
-            System.err.println("¡ERROR CRÍTICO: La conexión a la base de datos es NULL!");
-            return false;
-        }
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
 
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, usuario.getNombreUsuario());
-            ps.setString(2, usuario.getContrasenaHash());
-            ps.setInt(3, usuario.getIdRol());
-            ps.setString(4, usuario.getEstado());
-            ps.setInt(5, usuario.getIntentosFallidos());
-            
-            int filasAfectadas = ps.executeUpdate();
-            System.out.println("¡REGISTRO EXITOSO! Filas afectadas: " + filasAfectadas);
-            return filasAfectadas > 0;
-            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, usuario.getNombreUsuario());
+                ps.setString(2, usuario.getContrasenaHash());
+                ps.setInt(3, usuario.getIdRol());
+                ps.setString(4, usuario.getEstado());
+                ps.setInt(5, usuario.getIntentosFallidos());
+                
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("--- ERROR SQL EXACTO AL REGISTRAR ---");
-            System.err.println("Código de error: " + e.getErrorCode());
-            System.err.println("Estado SQL: " + e.getSQLState());
-            System.err.println("Mensaje detallado: " + e.getMessage());
+            System.err.println("Error al registrar usuario en Azure: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -112,13 +107,18 @@ public class UsuarioRepository {
     // 3. ACTUALIZAR UN USUARIO EXISTENTE
     public boolean actualizar(Usuario usuario) {
         String sql = "UPDATE Usuarios SET nombre_usuario = ?, id_rol = ?, estado = ? WHERE id_usuario = ?";
-        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, usuario.getNombreUsuario());
-            ps.setInt(2, usuario.getIdRol());
-            ps.setString(3, usuario.getEstado());
-            ps.setInt(4, usuario.getIdUsuario());
-            return ps.executeUpdate() > 0;
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, usuario.getNombreUsuario());
+                ps.setInt(2, usuario.getIdRol());
+                ps.setString(3, usuario.getEstado());
+                ps.setInt(4, usuario.getIdUsuario());
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
             System.err.println("Error al actualizar usuario: " + e.getMessage());
             return false;
@@ -128,10 +128,15 @@ public class UsuarioRepository {
     // 4. ELIMINAR UN USUARIO
     public boolean eliminar(int idUsuario) {
         String sql = "DELETE FROM Usuarios WHERE id_usuario = ?";
-        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setInt(1, idUsuario);
-            return ps.executeUpdate() > 0;
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idUsuario);
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
             System.err.println("Error al eliminar usuario: " + e.getMessage());
             return false;
