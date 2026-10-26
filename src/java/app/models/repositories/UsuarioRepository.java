@@ -12,18 +12,14 @@ import java.util.List;
 public class UsuarioRepository {
 
     public UsuarioRepository() {
-        // Constructor vacío
-    }
-
-    private Connection obtenerConexion() throws SQLException {
-        return ConexionBD.obtenerInstancia().obtenerConexion();
+        // Dejamos el constructor limpio para que cada método obtenga la conexión activa
     }
 
     public Usuario buscarPorUsuario(String nombreUsuario) {
         Usuario usr = null;
         String sql = "SELECT * FROM Usuarios WHERE nombre_usuario = ?";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, nombreUsuario);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -44,8 +40,8 @@ public class UsuarioRepository {
 
     public void actualizarIntentosYEstado(Usuario usuario) {
         String sql = "UPDATE Usuarios SET intentos_fallidos = ?, estado = ? WHERE id_usuario = ?";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, usuario.getIntentosFallidos());
             ps.setString(2, usuario.getEstado());
             ps.setInt(3, usuario.getIdUsuario());
@@ -63,8 +59,8 @@ public class UsuarioRepository {
     public List<Usuario> listarTodos() {
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM Usuarios";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql);
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Usuario usr = new Usuario();
@@ -85,13 +81,8 @@ public class UsuarioRepository {
     // 2. REGISTRAR UN NUEVO USUARIO
     public boolean registrar(Usuario usuario) {
         String sql = "INSERT INTO Usuarios (nombre_usuario, contrasena_hash, id_rol, estado, intentos_fallidos) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
-            
-            if (!conexion.getAutoCommit()) {
-                conexion.setAutoCommit(true);
-            }
-
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombreUsuario());
             ps.setString(2, usuario.getContrasenaHash());
             ps.setInt(3, usuario.getIdRol());
@@ -100,6 +91,7 @@ public class UsuarioRepository {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error al registrar usuario: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -107,13 +99,8 @@ public class UsuarioRepository {
     // 3. ACTUALIZAR UN USUARIO EXISTENTE
     public boolean actualizar(Usuario usuario) {
         String sql = "UPDATE Usuarios SET nombre_usuario = ?, id_rol = ?, estado = ? WHERE id_usuario = ?";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
-            
-            if (!conexion.getAutoCommit()) {
-                conexion.setAutoCommit(true);
-            }
-
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombreUsuario());
             ps.setInt(2, usuario.getIdRol());
             ps.setString(3, usuario.getEstado());
@@ -128,13 +115,8 @@ public class UsuarioRepository {
     // 4. ELIMINAR UN USUARIO
     public boolean eliminar(int idUsuario) {
         String sql = "DELETE FROM Usuarios WHERE id_usuario = ?";
-        try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
-            
-            if (!conexion.getAutoCommit()) {
-                conexion.setAutoCommit(true);
-            }
-
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
