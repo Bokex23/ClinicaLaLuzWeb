@@ -279,6 +279,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Usuario</th>
+                            <th>Email</th>
                             <th>Rol</th>
                             <th>Estado</th>
                             <th>Intentos Fallidos</th>
@@ -294,6 +295,7 @@
                             <tr>
                                 <td style="font-weight: 650;"><%= u.getIdUsuario() %></td>
                                 <td style="font-weight: 600;"><%= u.getNombreUsuario() %></td>
+                                <td style="color: var(--muted);"><%= u.getEmail() != null ? u.getEmail() : "-" %></td>
                                 <td><span class="badge badge-admin">Rol ID: <%= u.getIdRol() %></span></td>
                                 <td><span class="badge badge-active"><%= u.getEstado() %></span></td>
                                 <td><%= u.getIntentosFallidos() %></td>
@@ -321,7 +323,7 @@
                             } else { 
                         %>
                             <tr>
-                                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados en el sistema.</td>
+                                <td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">No hay usuarios registrados en el sistema.</td>
                             </tr>
                         <% } %>
                     </tbody>
