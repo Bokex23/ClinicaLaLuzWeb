@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioMedicoRepository {
-    private final Connection conexion;
 
     public ServicioMedicoRepository() {
-        this.conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        // Constructor vacío para mantener el patrón dinámico por método
     }
 
     public List<ServicioMedico> listarTodos() {
         List<ServicioMedico> lista = new ArrayList<>();
         String sql = "SELECT * FROM Servicios_Medicos";
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        
         try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -39,15 +40,63 @@ public class ServicioMedicoRepository {
 
     public boolean registrar(ServicioMedico s) {
         String sql = "INSERT INTO Servicios_Medicos (codigo_servicio, nombre_servicio, especialidad, costo, estado) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, s.getCodigoServicio());
-            ps.setString(2, s.getNombreServicio());
-            ps.setString(3, s.getEspecialidad());
-            ps.setDouble(4, s.getCosto());
-            ps.setString(5, s.getEstado() != null ? s.getEstado() : "disponible");
-            return ps.executeUpdate() > 0;
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, s.getCodigoServicio());
+                ps.setString(2, s.getNombreServicio());
+                ps.setString(3, s.getEspecialidad());
+                ps.setDouble(4, s.getCosto());
+                ps.setString(5, s.getEstado() != null ? s.getEstado() : "disponible");
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al registrar servicio: " + e.getMessage());
+            System.err.println("Error al registrar servicio en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizar(ServicioMedico s) {
+        String sql = "UPDATE Servicios_Medicos SET codigo_servicio = ?, nombre_servicio = ?, especialidad = ?, costo = ?, estado = ? WHERE id_servicio = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, s.getCodigoServicio());
+                ps.setString(2, s.getNombreServicio());
+                ps.setString(3, s.getEspecialidad());
+                ps.setDouble(4, s.getCosto());
+                ps.setString(5, s.getEstado());
+                ps.setInt(6, s.getIdServicio());
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar servicio en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminar(int idServicio) {
+        String sql = "DELETE FROM Servicios_Medicos WHERE id_servicio = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idServicio);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar servicio en Azure: " + e.getMessage());
             return false;
         }
     }
