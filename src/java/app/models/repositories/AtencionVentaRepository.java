@@ -84,7 +84,7 @@ public class AtencionVentaRepository {
                 ps.setDouble(4, venta.getIgv());
                 ps.setDouble(5, venta.getTotal());
                 ps.setString(6, venta.getEstado());
-                ps.setInt(7, venta.getIdVenta());
+                ps.setInt(7, venta.getIdVenta()); // Clave para actualizar sin duplicar
 
                 return ps.executeUpdate() > 0;
             }
