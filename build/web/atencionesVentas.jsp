@@ -25,62 +25,32 @@
         * { box-sizing: border-box; }
         html { min-height: 100%; }
         body {
-            margin: 0;
-            min-height: 100vh;
-            background: var(--page);
-            color: var(--ink);
+            margin: 0; min-height: 100vh; background: var(--page); color: var(--ink);
             font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            -webkit-font-smoothing: antialiased;
         }
         a { color: inherit; text-decoration: none; }
         button { font: inherit; cursor: pointer; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra Lateral */
         .sidebar {
-            position: fixed;
-            inset: 0 auto 0 0;
-            z-index: 30;
-            display: flex;
-            flex-direction: column;
-            width: var(--sidebar-width);
-            min-height: 100vh;
-            overflow-y: auto;
-            color: #fff;
+            position: fixed; inset: 0 auto 0 0; z-index: 30; display: flex; flex-direction: column;
+            width: var(--sidebar-width); min-height: 100vh; overflow-y: auto; color: #fff;
             background: linear-gradient(160deg, #104875 0%, var(--navy) 42%, var(--navy-deep) 100%);
             box-shadow: 10px 0 35px rgba(9, 40, 72, .08);
         }
         .sidebar::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            pointer-events: none;
-            border-radius: 50%;
-            width: 390px;
-            height: 390px;
-            left: -175px;
-            bottom: -210px;
+            content: ""; position: absolute; z-index: -1; pointer-events: none; border-radius: 50%;
+            width: 390px; height: 390px; left: -175px; bottom: -210px;
             background: linear-gradient(140deg, rgba(0, 102, 255, .25), rgba(0, 102, 255, 0));
         }
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            min-height: 112px;
-            padding: 25px 22px;
+            display: flex; align-items: center; gap: 13px; min-height: 112px; padding: 25px 22px;
             border-bottom: 1px solid rgba(255,255,255,.11);
         }
         .brand-mark {
-            display: grid;
-            flex: 0 0 48px;
-            width: 48px;
-            height: 48px;
-            place-items: center;
-            color: var(--navy);
-            background: #fff;
-            border: 1px solid rgba(255,255,255,.7);
-            border-radius: 15px;
-            box-shadow: 0 7px 18px rgba(0,0,0,.12);
+            display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center;
+            color: var(--navy); background: #fff; border: 1px solid rgba(255,255,255,.7);
+            border-radius: 15px; box-shadow: 0 7px 18px rgba(0,0,0,.12);
         }
         .brand-mark svg { width: 27px; height: 27px; }
         .brand-name { margin: 0; color: #fff; font-size: 17px; font-weight: 760; letter-spacing: -.35px; }
@@ -88,106 +58,54 @@
         .nav-area { padding: 24px 14px; }
         .nav-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
         .nav-link {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            min-height: 48px;
-            padding: 0 16px;
-            color: rgba(255,255,255,.76);
-            font-size: 14px;
-            font-weight: 560;
-            border: 1px solid transparent;
-            border-radius: 13px;
-            transition: background .2s ease, color .2s ease, transform .2s ease;
+            position: relative; display: flex; align-items: center; gap: 13px; min-height: 48px;
+            padding: 0 16px; color: rgba(255,255,255,.76); font-size: 14px; font-weight: 560;
+            border: 1px solid transparent; border-radius: 13px; transition: background .2s ease, color .2s ease;
         }
         .nav-link svg { width: 21px; height: 21px; flex: 0 0 21px; }
-        .nav-link:hover { color: #fff; background: rgba(255,255,255,.08); transform: translateX(2px); }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,.08); }
         .nav-link.is-active {
-            color: #fff;
-            background: linear-gradient(110deg, #1680ff, #075bf0);
+            color: #fff; background: linear-gradient(110deg, #1680ff, #075bf0);
             box-shadow: 0 9px 22px rgba(0, 93, 245, .28);
         }
         .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
 
-        /* Contenedor Principal */
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
         .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            min-height: 110px;
-            margin-bottom: 25px;
-            padding: 24px 32px;
-            background: rgba(255,255,255,.92);
-            border: 1px solid rgba(255,255,255,.95);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
+            display: flex; align-items: center; justify-content: space-between; gap: 24px;
+            min-height: 110px; margin-bottom: 25px; padding: 24px 32px; background: rgba(255,255,255,.92);
+            border: 1px solid rgba(255,255,255,.95); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
         }
         .page-title { margin: 0; color: var(--navy); font-size: 24px; font-weight: 790; letter-spacing: -.8px; }
         .page-subtitle { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 
         .btn-primary-custom {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 22px;
-            color: #fff;
-            background: linear-gradient(105deg, #1680ff, #075bf0);
-            border: 0;
-            border-radius: 12px;
-            box-shadow: 0 7px 15px rgba(8,102,245,.19);
-            font-size: 13px;
-            font-weight: 700;
-            transition: transform .2s, box-shadow .2s;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; color: #fff;
+            background: linear-gradient(105deg, #1680ff, #075bf0); border: 0; border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(8,102,245,.19); font-size: 13px; font-weight: 700; cursor: pointer;
         }
-        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
+        .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
 
         .btn-danger-custom {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 22px;
-            color: #fff;
-            background: linear-gradient(105deg, #ff5263, #e63946);
-            border: 0;
-            border-radius: 12px;
-            box-shadow: 0 7px 15px rgba(255, 82, 99, .19);
-            font-size: 13px;
-            font-weight: 700;
-            transition: transform .2s, box-shadow .2s;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; color: #fff;
+            background: linear-gradient(105deg, #ff5263, #e63946); border: 0; border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(255, 82, 99, .19); font-size: 13px; font-weight: 700; cursor: pointer;
         }
-        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); color: #fff; }
-
+        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); }
         .btn-primary-custom svg, .btn-danger-custom svg { width: 17px; height: 17px; }
 
-        /* Alertas */
         .alert-box {
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 14px; font-weight: 500;
+            display: flex; align-items: center; gap: 10px;
         }
         .alert-success { background: #e8f8ef; color: #1e7145; border: 1px solid #bde9d0; }
         .alert-error { background: #ffe6e8; color: #cc1b2b; border: 1px solid #ffb3b9; }
 
-        /* Tabla Estilizada */
         .card-table {
-            background: #fff;
-            border: 1px solid rgba(226,234,244,.9);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            margin-bottom: 25px;
+            background: #fff; border: 1px solid rgba(226,234,244,.9); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 25px;
         }
         .table-container { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
@@ -197,28 +115,13 @@
         tr:hover td { background: #fafdfd; }
 
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 650;
-            color: #1e7145;
-            background: #e8f8ef;
+            display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+            border-radius: 99px; font-size: 11px; font-weight: 650; color: #1e7145; background: #e8f8ef;
         }
-
         .action-btns { display: flex; gap: 8px; justify-content: center; }
         .btn-icon {
-            display: grid;
-            width: 34px;
-            height: 34px;
-            place-items: center;
-            border-radius: 10px;
-            border: 1px solid var(--line);
-            background: #fff;
-            transition: all .2s;
-            cursor: pointer;
+            display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px;
+            border: 1px solid var(--line); background: #fff; cursor: pointer;
         }
         .btn-icon.edit { color: #0866f5; }
         .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
@@ -226,17 +129,15 @@
         .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
         .btn-icon svg { width: 16px; height: 16px; }
 
-        /* Estilos de Modales Flotantes */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(8, 43, 75, 0.4); backdrop-filter: blur(4px);
             display: none; place-items: center; z-index: 100; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal-overlay.show { display: grid; opacity: 1; }
         .modal-card {
-            background: #fff; width: 100%; max-width: 600px; border-radius: var(--radius-lg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease;
+            background: #fff; width: 100%; max-width: 500px; border-radius: var(--radius-lg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden;
         }
-        .modal-overlay.show .modal-card { transform: translateY(0); }
         .modal-header { padding: 20px 24px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h3 { margin: 0; color: var(--navy); font-size: 18px; font-weight: 700; }
         .btn-close { background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer; }
@@ -245,18 +146,8 @@
         .form-group.full-width { grid-column: span 2; }
         .form-group label { font-size: 13px; font-weight: 650; color: var(--navy); }
         .form-group input, .form-group select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; outline: none; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
         .modal-footer { padding: 16px 24px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafdfd; }
         .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; cursor: pointer; }
-        .btn-secondary:hover { background: var(--page); }
-
-        @media (max-width: 850px) {
-            :root { --sidebar-width: 0px; }
-            .sidebar { transform: translateX(-100%); }
-            .main-content { margin-left: 0; padding: 20px; }
-            .modal-body { grid-template-columns: 1fr; }
-            .form-group.full-width { grid-column: span 1; }
-        }
     </style>
 </head>
 <body>
@@ -274,64 +165,18 @@
                 <p class="brand-caption">Portal Administrativo</p>
             </div>
         </div>
-
         <nav class="nav-area">
             <ul class="nav-list">
-                <li>
-                    <a class="nav-link" href="menuPrincipal.jsp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9.5V21h14V9.5M9 21v-7h6v7"/></svg>
-                        <span>Menú Principal</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="usuarios">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        <span>Gestión de Usuarios</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="pacientes">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/><circle cx="12" cy="7" r="4"/></svg>
-                        <span>Gestión de Pacientes</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="medicos">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
-                        <span>Cuerpo Médico</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="proveedores">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l3 13h13l3-10H7"/></svg>
-                        <span>Proveedores Médicos</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="servicios">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        <span>Servicios Médicos</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="insumos">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                        <span>Farmacia e Insumos</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link is-active" href="atencionesVentas">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                        <span>Atenciones y Ventas</span>
-                    </a>
-                </li>
-                <li class="nav-divider" aria-hidden="true"></li>
-                <li>
-                    <a class="nav-link logout" href="login.jsp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </li>
+                <li><a class="nav-link" href="menuPrincipal.jsp">Menú Principal</a></li>
+                <li><a class="nav-link" href="usuarios">Gestión de Usuarios</a></li>
+                <li><a class="nav-link" href="pacientes">Gestión de Pacientes</a></li>
+                <li><a class="nav-link" href="medicos">Cuerpo Médico</a></li>
+                <li><a class="nav-link" href="proveedores">Proveedores Médicos</a></li>
+                <li><a class="nav-link" href="servicios">Servicios Médicos</a></li>
+                <li><a class="nav-link" href="insumos">Farmacia e Insumos</a></li>
+                <li><a class="nav-link is-active" href="atencionesVentas">Atenciones y Ventas</a></li>
+                <li class="nav-divider"></li>
+                <li><a class="nav-link logout" href="login.jsp">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </aside>
@@ -343,9 +188,6 @@
                 <p class="page-subtitle">Control de transacciones, cobros de caja y emisión de comprobantes médicos.</p>
             </div>
             <button class="btn-primary-custom" type="button" onclick="document.getElementById('modalVenta').classList.add('show')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 5v14M5 12h14"/>
-                </svg>
                 Nueva Venta
             </button>
         </header>
@@ -355,15 +197,9 @@
             String error = request.getParameter("error");
             if (exito != null) {
         %>
-            <div class="alert-box alert-success">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                Venta registrada y procesada exitosamente en el sistema.
-            </div>
+            <div class="alert-box alert-success">Venta procesada exitosamente en el sistema.</div>
         <% } if (error != null) { %>
-            <div class="alert-box alert-error">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Hubo un error al procesar la venta. Verifique los datos.
-            </div>
+            <div class="alert-box alert-error">Hubo un error al procesar la venta. Verifique los datos.</div>
         <% } %>
 
         <div class="card-table">
@@ -390,7 +226,7 @@
                         %>
                         <tr>
                             <td style="font-weight: 650;">#<%= v.getIdVenta() %></td>
-                            <td style="font-weight: 500;"><%= v.getIdPaciente() %></td>
+                            <td><%= v.getIdPaciente() %></td>
                             <td><%= v.getIdUsuario() %></td>
                             <td>S/. <%= String.format("%.2f", v.getSubtotal()) %></td>
                             <td>S/. <%= String.format("%.2f", v.getIgv()) %></td>
@@ -400,11 +236,11 @@
                             <td style="text-align: center;">
                                 <div class="action-btns">
                                     <button type="button" class="btn-icon edit" title="Editar venta"
-                                        onclick="abrirEditar('<%= v.getIdVenta() %>', '<%= v.getIdPaciente() %>', '<%= v.getIdUsuario() %>', '<%= v.getSubtotal() %>', '<%= v.getIgv() %>', '<%= v.getTotal() %>', '<%= v.getEstado() %>')">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                        onclick="abrirEditar('<%= v.getIdVenta() %>', '<%= v.getIdPaciente() %>', '<%= v.getIdUsuario() %>', '<%= v.getTotal() %>', '<%= v.getEstado() %>')">
+                                        ✎
                                     </button>
                                     <button type="button" class="btn-icon delete" title="Eliminar venta" onclick="abrirEliminar('<%= v.getIdVenta() %>')">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        ✕
                                     </button>
                                 </div>
                             </td>
@@ -414,7 +250,7 @@
                             } else { 
                         %>
                         <tr>
-                            <td colspan="9" style="text-align: center; color: var(--muted); padding: 30px;">No se encontraron registros de ventas en el sistema.</td>
+                            <td colspan="9" style="text-align: center; color: var(--muted); padding: 30px;">No se encontraron registros de ventas.</td>
                         </tr>
                         <% } %>
                     </tbody>
@@ -423,14 +259,14 @@
         </div>
     </main>
 
-    <!-- Modal para Registrar Nueva Venta -->
+    <!-- Modal para Registrar Nueva Venta (Solo Pide el Total) -->
     <div class="modal-overlay" id="modalVenta">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>Registrar Nueva Venta / Atención</h3>
+                <h3>Registrar Nueva Venta</h3>
                 <button type="button" class="btn-close" onclick="document.getElementById('modalVenta').classList.remove('show')">&times;</button>
             </div>
-            <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+            <form action="atencionesVentas" method="POST">
                 <input type="hidden" name="accion" value="registrar">
                 <div class="modal-body">
                     <div class="form-group">
@@ -441,17 +277,9 @@
                         <label>ID Cajero / Usuario</label>
                         <input type="number" name="idUsuario" required placeholder="Ej: 1">
                     </div>
-                    <div class="form-group">
-                        <label>Subtotal (S/.)</label>
-                        <input type="number" step="0.01" name="subtotal" required placeholder="0.00">
-                    </div>
-                    <div class="form-group">
-                        <label>IGV (S/.)</label>
-                        <input type="number" step="0.01" name="igv" required placeholder="0.00">
-                    </div>
                     <div class="form-group full-width">
-                        <label>Total General (S/.)</label>
-                        <input type="number" step="0.01" name="total" required placeholder="0.00">
+                        <label>Total General a Cobrar (S/.) [Subtotal e IGV se calculan solos]</label>
+                        <input type="number" step="0.01" name="total" required placeholder="Ej: 118.00">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -466,10 +294,10 @@
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>Editar Venta / Atención</h3>
+                <h3>Editar Venta</h3>
                 <button type="button" class="btn-close" onclick="document.getElementById('modalEditar').classList.remove('show')">&times;</button>
             </div>
-            <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+            <form action="atencionesVentas" method="POST">
                 <input type="hidden" name="accion" value="actualizar">
                 <input type="hidden" name="idVenta" id="editIdVenta">
                 <div class="modal-body">
@@ -480,14 +308,6 @@
                     <div class="form-group">
                         <label>ID Cajero / Usuario</label>
                         <input type="number" name="idUsuario" id="editIdUsuario" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Subtotal (S/.)</label>
-                        <input type="number" step="0.01" name="subtotal" id="editSubtotal" required>
-                    </div>
-                    <div class="form-group">
-                        <label>IGV (S/.)</label>
-                        <input type="number" step="0.01" name="igv" id="editIgv" required>
                     </div>
                     <div class="form-group">
                         <label>Total General (S/.)</label>
@@ -510,26 +330,22 @@
         </div>
     </div>
 
-    <!-- Modal de Confirmación para Eliminar Venta -->
+    <!-- Modal para Eliminar Venta -->
     <div class="modal-overlay" id="modalEliminar">
-        <div class="modal-card" style="max-width: 450px;">
+        <div class="modal-card" style="max-width: 400px;">
             <div class="modal-header">
                 <h3 style="color: #ff5263;">Confirmar Eliminación</h3>
                 <button type="button" class="btn-close" onclick="document.getElementById('modalEliminar').classList.remove('show')">&times;</button>
             </div>
-            <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+            <form action="atencionesVentas" method="POST">
                 <input type="hidden" name="accion" value="eliminar">
                 <input type="hidden" name="id" id="deleteIdVenta">
-                <div class="modal-body" style="grid-template-columns: 1fr; text-align: center; padding: 30px 24px;">
-                    <p style="margin: 0; font-size: 15px; color: var(--ink);">¿Estás seguro de que deseas eliminar este registro de venta?</p>
-                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">Esta acción borrará la transacción permanentemente del sistema.</p>
+                <div class="modal-body" style="grid-template-columns: 1fr; text-align: center;">
+                    <p style="margin: 0; color: var(--ink);">¿Estás seguro de que deseas eliminar este registro de venta?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="document.getElementById('modalEliminar').classList.remove('show')">Cancelar</button>
-                    <button type="submit" class="btn-danger-custom">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                        Sí, Eliminar Venta
-                    </button>
+                    <button type="submit" class="btn-danger-custom">Sí, Eliminar</button>
                 </div>
             </form>
         </div>
@@ -537,12 +353,10 @@
 </div>
 
 <script>
-    function abrirEditar(id, idPaciente, idUsuario, subtotal, igv, total, estado) {
+    function abrirEditar(id, idPaciente, idUsuario, total, estado) {
         document.getElementById('editIdVenta').value = id;
         document.getElementById('editIdPaciente').value = idPaciente;
         document.getElementById('editIdUsuario').value = idUsuario;
-        document.getElementById('editSubtotal').value = subtotal;
-        document.getElementById('editIgv').value = igv;
         document.getElementById('editTotal').value = total;
         document.getElementById('editEstado').value = estado;
         document.getElementById('modalEditar').classList.add('show');

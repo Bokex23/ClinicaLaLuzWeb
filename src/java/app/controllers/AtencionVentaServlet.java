@@ -24,48 +24,62 @@ public class AtencionVentaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Recupera la lista de todas las atenciones / ventas desde la base de datos
         List<AtencionVenta> listaVentas = ventaRepository.listarTodas();
-        
-        // Adjunta la lista como atributo para que la vista JSP pueda mostrarla
         request.setAttribute("listaVentas", listaVentas);
-        
-        // Redirige hacia la vista del módulo
         request.getRequestDispatcher("atencionesVentas.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Asegurar la correcta codificación de caracteres para evitar problemas con tildes o datos
         request.setCharacterEncoding("UTF-8");
+        String accion = request.getParameter("accion");
+
+        if (accion == null) {
+            response.sendRedirect("atencionesVentas");
+            return;
+        }
 
         try {
-            // Captura parámetros del formulario de registro de venta / atención
-            int idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
-            int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-            double subtotal = Double.parseDouble(request.getParameter("subtotal"));
-            double igv = Double.parseDouble(request.getParameter("igv"));
-            double total = Double.parseDouble(request.getParameter("total"));
+            if ("registrar".equals(accion) || "actualizar".equals(accion)) {
+                int idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
+                int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+                
+                // El usuario solo ingresa el Total, el sistema calcula Subtotal e IGV automáticamente
+                double total = Double.parseDouble(request.getParameter("total"));
+                double subtotal = total / 1.18;
+                double igv = total - subtotal;
 
-            AtencionVenta nuevaVenta = new AtencionVenta();
-            nuevaVenta.setIdPaciente(idPaciente);
-            nuevaVenta.setIdUsuario(idUsuario);
-            nuevaVenta.setSubtotal(subtotal);
-            nuevaVenta.setIgv(igv);
-            nuevaVenta.setTotal(total);
-            nuevaVenta.setEstado("EMITIDO");
+                AtencionVenta venta = new AtencionVenta();
+                venta.setIdPaciente(idPaciente);
+                venta.setIdUsuario(idUsuario);
+                venta.setSubtotal(subtotal);
+                venta.setIgv(igv);
+                venta.setTotal(total);
 
-            boolean registrado = ventaRepository.insertar(nuevaVenta);
+                if ("registrar".equals(accion)) {
+                    venta.setEstado("EMITIDO");
+                    boolean ok = ventaRepository.insertar(venta);
+                    response.sendRedirect("atencionesVentas?" + (ok ? "exito=1" : "error=1"));
+                } else {
+                    int idVenta = Integer.parseInt(request.getParameter("idVenta"));
+                    String estado = request.getParameter("estado");
+                    venta.setIdVenta(idVenta);
+                    venta.setEstado(estado != null ? estado : "EMITIDO");
+                    
+                    boolean ok = ventaRepository.actualizar(venta);
+                    response.sendRedirect("atencionesVentas?" + (ok ? "exito=1" : "error=1"));
+                }
 
-            if (registrado) {
-                response.sendRedirect("atencionesVentas?exito=1");
+            } else if ("eliminar".equals(accion)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                boolean ok = ventaRepository.eliminar(id);
+                response.sendRedirect("atencionesVentas?" + (ok ? "exito=1" : "error=1"));
             } else {
-                response.sendRedirect("atencionesVentas?error=1");
+                response.sendRedirect("atencionesVentas");
             }
         } catch (NumberFormatException e) {
+            System.err.println("Error de formato numérico en Venta: " + e.getMessage());
             response.sendRedirect("atencionesVentas?error=1");
         }
     }
