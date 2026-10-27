@@ -112,8 +112,6 @@
         .nav-divider { height: 1px; margin: 18px 10px 13px; background: rgba(255,255,255,.11); }
         .nav-link.logout { color: #ff737f; }
         .nav-link.logout:hover { color: #fff; background: rgba(255, 82, 99, .13); }
-        .sidebar-bottom { margin-top: auto; padding: 20px 22px 25px; color: rgba(255,255,255,.45); font-size: 11px; }
-        .sidebar-bottom .tiny-line { width: 42px; height: 3px; margin-bottom: 11px; border-radius: 10px; background: rgba(54,150,255,.8); }
 
         /* Contenido Principal */
         .main-content { min-height: 100vh; margin-left: var(--sidebar-width); padding: 32px clamp(22px, 3vw, 48px) 42px; }
@@ -150,7 +148,25 @@
             cursor: pointer;
         }
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); }
-        .btn-primary-custom svg { width: 17px; height: 17px; }
+        
+        .btn-danger-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            color: #fff;
+            background: linear-gradient(105deg, #ff5263, #e63946);
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(255, 82, 99, .19);
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
+        }
+        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); }
+
+        .btn-primary-custom svg, .btn-danger-custom svg { width: 17px; height: 17px; }
 
         /* Tabla Estilizada */
         .card-table {
@@ -306,14 +322,10 @@
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </button>
 
-                                        <!-- Botón Eliminar -->
-                                        <form action="usuarios" method="POST" style="display:inline;">
-                                            <input type="hidden" name="accion" value="eliminar">
-                                            <input type="hidden" name="id" value="<%= u.getIdUsuario() %>">
-                                            <button type="submit" class="btn-icon delete" title="Eliminar usuario" onclick="return confirm('¿Desea eliminar este usuario?');">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                            </button>
-                                        </form>
+                                        <!-- Botón Eliminar conectado al Modal -->
+                                        <button type="button" class="btn-icon delete" title="Eliminar usuario" onclick="abrirEliminar('<%= u.getIdUsuario() %>')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -331,7 +343,7 @@
         </div>
     </main>
 
-    <!-- Modal para Registrar Nuevo Usuario (Con campo Email añadido) -->
+    <!-- Modal para Registrar Nuevo Usuario -->
     <div class="modal-overlay" id="modalUsuario">
         <div class="modal-card">
             <div class="modal-header">
@@ -407,6 +419,31 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal de Confirmación para Eliminar Usuario -->
+    <div class="modal-overlay" id="modalEliminar">
+        <div class="modal-card" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 style="color: #ff5263;">Confirmar Eliminación</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEliminar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="usuarios" method="POST">
+                <input type="hidden" name="accion" value="eliminar">
+                <input type="hidden" name="id" id="deleteIdUsuario">
+                <div class="modal-body" style="text-align: center; padding: 30px 24px;">
+                    <p style="margin: 0; font-size: 15px; color: var(--ink);">¿Estás seguro de que deseas eliminar este usuario permanentemente?</p>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">Esta acción borrará sus credenciales de acceso del sistema.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEliminar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-danger-custom">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Sí, Eliminar Usuario
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -416,6 +453,11 @@
         document.getElementById('editIdRol').value = rol;
         document.getElementById('editEstado').value = estado;
         document.getElementById('modalEditar').classList.add('show');
+    }
+
+    function abrirEliminar(id) {
+        document.getElementById('deleteIdUsuario').value = id;
+        document.getElementById('modalEliminar').classList.add('show');
     }
 </script>
 </body>

@@ -540,7 +540,7 @@
         document.getElementById('modalEditar').classList.add('show');
     }
 
-    // NUEVO: Función para abrir el modal de eliminación
+    // Función para abrir el modal de eliminación
     function abrirEliminar(id) {
         document.getElementById('deleteIdPaciente').value = id;
         document.getElementById('modalEliminar').classList.add('show');
