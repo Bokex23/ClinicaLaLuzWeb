@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AtencionVentaRepository {
-    private final Connection conexion;
 
     public AtencionVentaRepository() {
-        this.conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        // Constructor vacío para mantener el patrón dinámico por método
     }
 
     public List<AtencionVenta> listarTodas() {
         List<AtencionVenta> lista = new ArrayList<>();
         String sql = "SELECT id_venta, id_paciente, id_usuario, subtotal, igv, total, estado, fecha_venta FROM Atenciones_Ventas";
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
 
         try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -45,19 +45,70 @@ public class AtencionVentaRepository {
     public boolean insertar(AtencionVenta venta) {
         String sql = "INSERT INTO Atenciones_Ventas (id_paciente, id_usuario, subtotal, igv, total, estado) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setInt(1, venta.getIdPaciente());
-            ps.setInt(2, venta.getIdUsuario());
-            ps.setDouble(3, venta.getSubtotal());
-            ps.setDouble(4, venta.getIgv());
-            ps.setDouble(5, venta.getTotal());
-            ps.setString(6, venta.getEstado());
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
 
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, venta.getIdPaciente());
+                ps.setInt(2, venta.getIdUsuario());
+                ps.setDouble(3, venta.getSubtotal());
+                ps.setDouble(4, venta.getIgv());
+                ps.setDouble(5, venta.getTotal());
+                ps.setString(6, venta.getEstado() != null ? venta.getEstado() : "EMITIDO");
 
+                int filasAfectadas = ps.executeUpdate();
+                return filasAfectadas > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al insertar la venta: " + e.getMessage());
+            System.err.println("Error al insertar la venta en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizar(AtencionVenta venta) {
+        String sql = "UPDATE Atenciones_Ventas SET id_paciente = ?, id_usuario = ?, subtotal = ?, igv = ?, total = ?, estado = ? WHERE id_venta = ?";
+
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, venta.getIdPaciente());
+                ps.setInt(2, venta.getIdUsuario());
+                ps.setDouble(3, venta.getSubtotal());
+                ps.setDouble(4, venta.getIgv());
+                ps.setDouble(5, venta.getTotal());
+                ps.setString(6, venta.getEstado());
+                ps.setInt(7, venta.getIdVenta());
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar la venta en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminar(int idVenta) {
+        String sql = "DELETE FROM Atenciones_Ventas WHERE id_venta = ?";
+
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idVenta);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar la venta en Azure: " + e.getMessage());
             return false;
         }
     }

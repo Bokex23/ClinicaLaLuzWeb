@@ -36,7 +36,7 @@
         button { font: inherit; cursor: pointer; }
         .app-shell { min-height: 100vh; }
 
-        /* Barra Lateral (Clon exacto de tu plantilla) */
+        /* Barra Lateral */
         .sidebar {
             position: fixed;
             inset: 0 auto 0 0;
@@ -143,11 +143,30 @@
             font-size: 13px;
             font-weight: 700;
             transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
         }
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
-        .btn-primary-custom svg { width: 17px; height: 17px; }
 
-        /* Alertas para éxito/error */
+        .btn-danger-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            color: #fff;
+            background: linear-gradient(105deg, #ff5263, #e63946);
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(255, 82, 99, .19);
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
+        }
+        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); color: #fff; }
+
+        .btn-primary-custom svg, .btn-danger-custom svg { width: 17px; height: 17px; }
+
+        /* Alertas */
         .alert-box {
             padding: 16px 20px;
             border-radius: 12px;
@@ -177,7 +196,6 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #fafdfd; }
 
-        /* Badge de estado adaptado a tu estilo (color verde para ventas) */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -200,6 +218,7 @@
             border: 1px solid var(--line);
             background: #fff;
             transition: all .2s;
+            cursor: pointer;
         }
         .btn-icon.edit { color: #0866f5; }
         .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
@@ -207,7 +226,7 @@
         .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
         .btn-icon svg { width: 16px; height: 16px; }
 
-        /* Estilos del Modal integrados al diseño nativo */
+        /* Estilos de Modales Flotantes */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(8, 43, 75, 0.4); backdrop-filter: blur(4px);
             display: none; place-items: center; z-index: 100; opacity: 0; transition: opacity 0.3s ease;
@@ -218,29 +237,30 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease;
         }
         .modal-overlay.show .modal-card { transform: translateY(0); }
-        .modal-header { padding: 24px 30px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header { padding: 20px 24px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h3 { margin: 0; color: var(--navy); font-size: 18px; font-weight: 700; }
-        .btn-close { background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; transition: color 0.2s; }
-        .btn-close:hover { color: var(--navy); }
-        .modal-body { padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .btn-close { background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer; }
+        .modal-body { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full-width { grid-column: span 2; }
         .form-group label { font-size: 13px; font-weight: 650; color: var(--navy); }
-        .form-group input { padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; outline: none; color: var(--ink); }
-        .form-group input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
-        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 12px; background: #fafdfd; }
-        .btn-secondary { padding: 12px 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); font-weight: 600; font-size: 13px; }
+        .form-group input, .form-group select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafdfd; }
+        .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; cursor: pointer; }
         .btn-secondary:hover { background: var(--page); }
 
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
             .sidebar { transform: translateX(-100%); }
             .main-content { margin-left: 0; padding: 20px; }
+            .modal-body { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 <div class="app-shell">
-    <!-- Sidebar exacto con todos los módulos y Atenciones y Ventas Activo -->
     <aside class="sidebar" aria-label="Navegación principal">
         <div class="brand">
             <div class="brand-mark" aria-hidden="true">
@@ -330,7 +350,6 @@
             </button>
         </header>
 
-        <!-- Alertas de proceso -->
         <%
             String exito = request.getParameter("exito");
             String error = request.getParameter("error");
@@ -377,13 +396,14 @@
                             <td>S/. <%= String.format("%.2f", v.getIgv()) %></td>
                             <td style="font-weight: 700; color: #1e7145;">S/. <%= String.format("%.2f", v.getTotal()) %></td>
                             <td><span class="badge"><%= v.getEstado() %></span></td>
-                            <td style="color: var(--muted);"><%= v.getFechaVenta() %></td>
+                            <td style="color: var(--muted);"><%= v.getFechaVenta() != null ? v.getFechaVenta() : "-" %></td>
                             <td style="text-align: center;">
                                 <div class="action-btns">
-                                    <button class="btn-icon edit" title="Editar venta">
+                                    <button type="button" class="btn-icon edit" title="Editar venta"
+                                        onclick="abrirEditar('<%= v.getIdVenta() %>', '<%= v.getIdPaciente() %>', '<%= v.getIdUsuario() %>', '<%= v.getSubtotal() %>', '<%= v.getIgv() %>', '<%= v.getTotal() %>', '<%= v.getEstado() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <button class="btn-icon delete" title="Eliminar venta">
+                                    <button type="button" class="btn-icon delete" title="Eliminar venta" onclick="abrirEliminar('<%= v.getIdVenta() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                                     </button>
                                 </div>
@@ -403,7 +423,7 @@
         </div>
     </main>
 
-    <!-- Modal para registrar nueva venta (Estilizado con tu CSS nativo) -->
+    <!-- Modal para Registrar Nueva Venta -->
     <div class="modal-overlay" id="modalVenta">
         <div class="modal-card">
             <div class="modal-header">
@@ -411,6 +431,7 @@
                 <button type="button" class="btn-close" onclick="document.getElementById('modalVenta').classList.remove('show')">&times;</button>
             </div>
             <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+                <input type="hidden" name="accion" value="registrar">
                 <div class="modal-body">
                     <div class="form-group">
                         <label>ID Paciente</label>
@@ -421,15 +442,15 @@
                         <input type="number" name="idUsuario" required placeholder="Ej: 1">
                     </div>
                     <div class="form-group">
-                        <label>Subtotal (S/)</label>
+                        <label>Subtotal (S/.)</label>
                         <input type="number" step="0.01" name="subtotal" required placeholder="0.00">
                     </div>
                     <div class="form-group">
-                        <label>IGV (S/)</label>
+                        <label>IGV (S/.)</label>
                         <input type="number" step="0.01" name="igv" required placeholder="0.00">
                     </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Total General (S/)</label>
+                    <div class="form-group full-width">
+                        <label>Total General (S/.)</label>
                         <input type="number" step="0.01" name="total" required placeholder="0.00">
                     </div>
                 </div>
@@ -440,6 +461,97 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal para Editar Venta -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Venta / Atención</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEditar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+                <input type="hidden" name="accion" value="actualizar">
+                <input type="hidden" name="idVenta" id="editIdVenta">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID Paciente</label>
+                        <input type="number" name="idPaciente" id="editIdPaciente" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ID Cajero / Usuario</label>
+                        <input type="number" name="idUsuario" id="editIdUsuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subtotal (S/.)</label>
+                        <input type="number" step="0.01" name="subtotal" id="editSubtotal" required>
+                    </div>
+                    <div class="form-group">
+                        <label>IGV (S/.)</label>
+                        <input type="number" step="0.01" name="igv" id="editIgv" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Total General (S/.)</label>
+                        <input type="number" step="0.01" name="total" id="editTotal" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado" id="editEstado">
+                            <option value="EMITIDO">EMITIDO</option>
+                            <option value="PAGADO">PAGADO</option>
+                            <option value="ANULADO">ANULADO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEditar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Eliminar Venta -->
+    <div class="modal-overlay" id="modalEliminar">
+        <div class="modal-card" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 style="color: #ff5263;">Confirmar Eliminación</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEliminar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="${pageContext.request.contextPath}/atencionesVentas" method="POST">
+                <input type="hidden" name="accion" value="eliminar">
+                <input type="hidden" name="id" id="deleteIdVenta">
+                <div class="modal-body" style="grid-template-columns: 1fr; text-align: center; padding: 30px 24px;">
+                    <p style="margin: 0; font-size: 15px; color: var(--ink);">¿Estás seguro de que deseas eliminar este registro de venta?</p>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">Esta acción borrará la transacción permanentemente del sistema.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEliminar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-danger-custom">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Sí, Eliminar Venta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    function abrirEditar(id, idPaciente, idUsuario, subtotal, igv, total, estado) {
+        document.getElementById('editIdVenta').value = id;
+        document.getElementById('editIdPaciente').value = idPaciente;
+        document.getElementById('editIdUsuario').value = idUsuario;
+        document.getElementById('editSubtotal').value = subtotal;
+        document.getElementById('editIgv').value = igv;
+        document.getElementById('editTotal').value = total;
+        document.getElementById('editEstado').value = estado;
+        document.getElementById('modalEditar').classList.add('show');
+    }
+
+    function abrirEliminar(id) {
+        document.getElementById('deleteIdVenta').value = id;
+        document.getElementById('modalEliminar').classList.add('show');
+    }
+</script>
 </body>
 </html>
