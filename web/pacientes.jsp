@@ -189,10 +189,30 @@
         .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
         .btn-icon svg { width: 16px; height: 16px; }
 
+        /* Estilos de Modales Flotantes */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(8, 43, 75, 0.4); backdrop-filter: blur(4px);
+            display: none; place-items: center; z-index: 100;
+        }
+        .modal-overlay.show { display: grid; }
+        .modal-card { background: #fff; width: 100%; max-width: 600px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { margin: 0; color: var(--navy); font-size: 18px; }
+        .btn-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
+        .modal-body { padding: 24px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-group label { font-size: 13px; font-weight: 650; color: var(--navy); }
+        .form-group input, .form-group select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; outline: none; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafdfd; }
+        .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; cursor: pointer; }
+
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
             .sidebar { transform: translateX(-100%); }
             .main-content { margin-left: 0; padding: 20px; }
+            .modal-body { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
         }
     </style>
 </head>
@@ -287,8 +307,7 @@
                 <h1 class="page-title">Gestión de Pacientes</h1>
                 <p class="page-subtitle">Registro, control de historias clínicas y administración de datos.</p>
             </div>
-            <!-- BOTÓN ACTUALIZADO CON ICONO PROFESIONAL -->
-            <button class="btn-primary-custom" type="button">
+            <button class="btn-primary-custom" type="button" onclick="document.getElementById('modalPaciente').classList.add('show')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/>
                     <circle cx="9.5" cy="7" r="4"/>
@@ -323,18 +342,23 @@
                             <td style="font-weight: 650;"><%= p.getIdPaciente() %></td>
                             <td style="font-weight: 600;"><%= p.getNombres() %> <%= p.getApellidos() %></td>
                             <td><%= p.getTipoDocumento() %>: <%= p.getNumeroDocumento() %></td>
-                            <td><%= p.getTelefono() %></td>
-                            <td><%= p.getCorreo() %></td>
-                            <td><%= p.getDireccion() %></td>
+                            <td><%= p.getTelefono() != null ? p.getTelefono() : "-" %></td>
+                            <td><%= p.getCorreo() != null ? p.getCorreo() : "-" %></td>
+                            <td><%= p.getDireccion() != null ? p.getDireccion() : "-" %></td>
                             <td><span class="badge"><%= p.getEstado() %></span></td>
                             <td style="text-align: center;">
                                 <div class="action-btns">
-                                    <button class="btn-icon edit" title="Editar paciente">
+                                    <button type="button" class="btn-icon edit" title="Editar paciente"
+                                        onclick="abrirEditar('<%= p.getIdPaciente() %>', '<%= p.getNombres() %>', '<%= p.getApellidos() %>', '<%= p.getTipoDocumento() %>', '<%= p.getNumeroDocumento() %>', '<%= p.getTelefono() %>', '<%= p.getCorreo() %>', '<%= p.getDireccion() %>', '<%= p.getEstado() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <button class="btn-icon delete" title="Eliminar paciente">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                    </button>
+                                    <form action="pacientes" method="POST" style="display:inline;">
+                                        <input type="hidden" name="accion" value="eliminar">
+                                        <input type="hidden" name="id" value="<%= p.getIdPaciente() %>">
+                                        <button type="submit" class="btn-icon delete" title="Eliminar paciente" onclick="return confirm('¿Desea eliminar este paciente permanentemente?');">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -351,6 +375,131 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal para Registrar Nuevo Paciente -->
+    <div class="modal-overlay" id="modalPaciente">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Registrar Nuevo Paciente</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalPaciente').classList.remove('show')">&times;</button>
+            </div>
+            <form action="pacientes" method="POST">
+                <input type="hidden" name="accion" value="registrar">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" name="nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo Documento</label>
+                        <select name="tipo_documento" required>
+                            <option value="DNI">DNI</option>
+                            <option value="CE">Carnet Extranjería</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>N° Documento</label>
+                        <input type="text" name="numero_documento" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" name="correo">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Dirección</label>
+                        <input type="text" name="direccion">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalPaciente').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Paciente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Paciente -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Paciente</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEditar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="pacientes" method="POST">
+                <input type="hidden" name="accion" value="actualizar">
+                <input type="hidden" name="idPaciente" id="editIdPaciente">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" name="nombres" id="editNombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" id="editApellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo Documento</label>
+                        <select name="tipo_documento" id="editTipoDocumento" required>
+                            <option value="DNI">DNI</option>
+                            <option value="CE">Carnet Extranjería</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>N° Documento</label>
+                        <input type="text" name="numero_documento" id="editNumeroDocumento" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono" id="editTelefono">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" name="correo" id="editCorreo">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" name="direccion" id="editDireccion">
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado" id="editEstado">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEditar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    function abrirEditar(id, nombres, apellidos, tipoDoc, numDoc, telefono, correo, direccion, estado) {
+        document.getElementById('editIdPaciente').value = id;
+        document.getElementById('editNombres').value = nombres;
+        document.getElementById('editApellidos').value = apellidos;
+        document.getElementById('editTipoDocumento').value = tipoDoc;
+        document.getElementById('editNumeroDocumento').value = numDoc;
+        document.getElementById('editTelefono').value = (telefono !== 'null' && telefono !== '-') ? telefono : '';
+        document.getElementById('editCorreo').value = (correo !== 'null' && correo !== '-') ? correo : '';
+        document.getElementById('editDireccion').value = (direccion !== 'null' && direccion !== '-') ? direccion : '';
+        document.getElementById('editEstado').value = estado;
+        document.getElementById('modalEditar').classList.add('show');
+    }
+</script>
 </body>
 </html>
