@@ -143,7 +143,24 @@
             transition: transform .2s, box-shadow .2s;
         }
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
-        .btn-primary-custom svg { width: 17px; height: 17px; }
+        
+        .btn-danger-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            color: #fff;
+            background: linear-gradient(105deg, #ff5263, #e63946);
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(255, 82, 99, .19);
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); color: #fff; }
+
+        .btn-primary-custom svg, .btn-danger-custom svg { width: 17px; height: 17px; }
 
         .card-table {
             background: #fff;
@@ -352,13 +369,10 @@
                                         onclick="abrirEditar('<%= p.getIdPaciente() %>', '<%= p.getNombres() %>', '<%= p.getApellidos() %>', '<%= p.getTipoDocumento() %>', '<%= p.getNumeroDocumento() %>', '<%= p.getTelefono() %>', '<%= p.getCorreo() %>', '<%= p.getDireccion() %>', '<%= p.getEstado() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <form action="pacientes" method="POST" style="display:inline;">
-                                        <input type="hidden" name="accion" value="eliminar">
-                                        <input type="hidden" name="id" value="<%= p.getIdPaciente() %>">
-                                        <button type="submit" class="btn-icon delete" title="Eliminar paciente" onclick="return confirm('¿Desea eliminar este paciente permanentemente?');">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                        </button>
-                                    </form>
+                                    <!-- Botón Eliminar modificado para abrir el nuevo Modal flotante -->
+                                    <button type="button" class="btn-icon delete" title="Eliminar paciente" onclick="abrirEliminar('<%= p.getIdPaciente() %>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -485,6 +499,31 @@
             </form>
         </div>
     </div>
+
+    <!-- NUEVO: Modal de Confirmación para Eliminar Paciente -->
+    <div class="modal-overlay" id="modalEliminar">
+        <div class="modal-card" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 style="color: #ff5263;">Confirmar Eliminación</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEliminar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="pacientes" method="POST">
+                <input type="hidden" name="accion" value="eliminar">
+                <input type="hidden" name="id" id="deleteIdPaciente">
+                <div class="modal-body" style="grid-template-columns: 1fr; text-align: center; padding: 30px 24px;">
+                    <p style="margin: 0; font-size: 15px; color: var(--ink);">¿Estás seguro de que deseas eliminar a este paciente de forma permanente?</p>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">Esta acción no se puede deshacer y borrará todos sus datos registrados.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEliminar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-danger-custom">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Sí, Eliminar Paciente
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -499,6 +538,12 @@
         document.getElementById('editDireccion').value = (direccion !== 'null' && direccion !== '-') ? direccion : '';
         document.getElementById('editEstado').value = estado;
         document.getElementById('modalEditar').classList.add('show');
+    }
+
+    // NUEVO: Función para abrir el modal de eliminación
+    function abrirEliminar(id) {
+        document.getElementById('deleteIdPaciente').value = id;
+        document.getElementById('modalEliminar').classList.add('show');
     }
 </script>
 </body>
