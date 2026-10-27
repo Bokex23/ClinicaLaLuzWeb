@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProveedorMedicoRepository {
-    private final Connection conexion;
 
     public ProveedorMedicoRepository() {
-        this.conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        // Constructor vacío para mantener el patrón dinámico por método
     }
 
     public List<ProveedorMedico> listarTodos() {
         List<ProveedorMedico> lista = new ArrayList<>();
         String sql = "SELECT * FROM Proveedores_Medicos";
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        
         try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -41,17 +42,67 @@ public class ProveedorMedicoRepository {
 
     public boolean registrar(ProveedorMedico p) {
         String sql = "INSERT INTO Proveedores_Medicos (razon_social, ruc, tipo_proveedor, telefono, correo, direccion, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, p.getRazonSocial());
-            ps.setString(2, p.getRuc());
-            ps.setString(3, p.getTipoProveedor());
-            ps.setString(4, p.getTelefono());
-            ps.setString(5, p.getCorreo());
-            ps.setString(6, p.getDireccion());
-            ps.setString(7, p.getEstado() != null ? p.getEstado() : "activo");
-            return ps.executeUpdate() > 0;
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, p.getRazonSocial());
+                ps.setString(2, p.getRuc());
+                ps.setString(3, p.getTipoProveedor());
+                ps.setString(4, p.getTelefono());
+                ps.setString(5, p.getCorreo());
+                ps.setString(6, p.getDireccion());
+                ps.setString(7, p.getEstado() != null ? p.getEstado() : "activo");
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al registrar proveedor: " + e.getMessage());
+            System.err.println("Error al registrar proveedor en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizar(ProveedorMedico p) {
+        String sql = "UPDATE Proveedores_Medicos SET razon_social = ?, ruc = ?, tipo_proveedor = ?, telefono = ?, correo = ?, direccion = ?, estado = ? WHERE id_proveedor = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, p.getRazonSocial());
+                ps.setString(2, p.getRuc());
+                ps.setString(3, p.getTipoProveedor());
+                ps.setString(4, p.getTelefono());
+                ps.setString(5, p.getCorreo());
+                ps.setString(6, p.getDireccion());
+                ps.setString(7, p.getEstado());
+                ps.setInt(8, p.getIdProveedor());
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar proveedor en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminar(int idProveedor) {
+        String sql = "DELETE FROM Proveedores_Medicos WHERE id_proveedor = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idProveedor);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar proveedor en Azure: " + e.getMessage());
             return false;
         }
     }
