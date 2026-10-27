@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InsumoMedicamentoRepository {
-    private final Connection conexion;
 
     public InsumoMedicamentoRepository() {
-        this.conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        // Constructor vacío para mantener el patrón dinámico por método
     }
 
     public List<InsumoMedicamento> listarTodos() {
         List<InsumoMedicamento> lista = new ArrayList<>();
         String sql = "SELECT * FROM Insumos_Medicamentos";
+        Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+        
         try (PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -41,17 +42,67 @@ public class InsumoMedicamentoRepository {
 
     public boolean registrar(InsumoMedicamento i) {
         String sql = "INSERT INTO Insumos_Medicamentos (codigo_item, nombre_item, categoria, precio_unitario, stock_actual, stock_minimo, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, i.getCodigoItem());
-            ps.setString(2, i.getNombreItem());
-            ps.setString(3, i.getCategoria());
-            ps.setDouble(4, i.getPrecioUnitario());
-            ps.setInt(5, i.getStockActual());
-            ps.setInt(6, i.getStockMinimo());
-            ps.setString(7, i.getEstado() != null ? i.getEstado() : "disponible");
-            return ps.executeUpdate() > 0;
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, i.getCodigoItem());
+                ps.setString(2, i.getNombreItem());
+                ps.setString(3, i.getCategoria());
+                ps.setDouble(4, i.getPrecioUnitario());
+                ps.setInt(5, i.getStockActual());
+                ps.setInt(6, i.getStockMinimo());
+                ps.setString(7, i.getEstado() != null ? i.getEstado() : "disponible");
+                return ps.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al registrar insumo: " + e.getMessage());
+            System.err.println("Error al registrar insumo en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizar(InsumoMedicamento i) {
+        String sql = "UPDATE Insumos_Medicamentos SET codigo_item = ?, nombre_item = ?, categoria = ?, precio_unitario = ?, stock_actual = ?, stock_minimo = ?, estado = ? WHERE id_item = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setString(1, i.getCodigoItem());
+                ps.setString(2, i.getNombreItem());
+                ps.setString(3, i.getCategoria());
+                ps.setDouble(4, i.getPrecioUnitario());
+                ps.setInt(5, i.getStockActual());
+                ps.setInt(6, i.getStockMinimo());
+                ps.setString(7, i.getEstado());
+                ps.setInt(8, i.getIdItem());
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar insumo en Azure: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminar(int idItem) {
+        String sql = "DELETE FROM Insumos_Medicamentos WHERE id_item = ?";
+        try {
+            Connection conexion = ConexionBD.obtenerInstancia().obtenerConexion();
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+            }
+            
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, idItem);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar insumo en Azure: " + e.getMessage());
             return false;
         }
     }
