@@ -141,9 +141,28 @@
             font-size: 13px;
             font-weight: 700;
             transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
         }
         .btn-primary-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(8,102,245,.26); color: #fff; }
-        .btn-primary-custom svg { width: 17px; height: 17px; }
+
+        .btn-danger-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            color: #fff;
+            background: linear-gradient(105deg, #ff5263, #e63946);
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 7px 15px rgba(255, 82, 99, .19);
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
+        }
+        .btn-danger-custom:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(255, 82, 99, .26); color: #fff; }
+
+        .btn-primary-custom svg, .btn-danger-custom svg { width: 17px; height: 17px; }
 
         .card-table {
             background: #fff;
@@ -182,6 +201,7 @@
             border: 1px solid var(--line);
             background: #fff;
             transition: all .2s;
+            cursor: pointer;
         }
         .btn-icon.edit { color: #0866f5; }
         .btn-icon.edit:hover { background: #e8f1ff; border-color: #b3d1ff; }
@@ -189,10 +209,30 @@
         .btn-icon.delete:hover { background: #ffe6e8; border-color: #ffb3b9; }
         .btn-icon svg { width: 16px; height: 16px; }
 
+        /* Estilos de Modales Flotantes */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(8, 43, 75, 0.4); backdrop-filter: blur(4px);
+            display: none; place-items: center; z-index: 100;
+        }
+        .modal-overlay.show { display: grid; }
+        .modal-card { background: #fff; width: 100%; max-width: 600px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; background: #f8fbff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { margin: 0; color: var(--navy); font-size: 18px; }
+        .btn-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
+        .modal-body { padding: 24px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-group label { font-size: 13px; font-weight: 650; color: var(--navy); }
+        .form-group input, .form-group select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; outline: none; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafdfd; }
+        .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 600; cursor: pointer; }
+
         @media (max-width: 850px) {
             :root { --sidebar-width: 0px; }
             .sidebar { transform: translateX(-100%); }
             .main-content { margin-left: 0; padding: 20px; }
+            .modal-body { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
         }
     </style>
 </head>
@@ -233,7 +273,6 @@
                 </li>
                 <li>
                     <a class="nav-link" href="pacientes">
-                        <!-- ICONO DE PACIENTES ENDEREZADO -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M17 21v-1a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v1"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -288,7 +327,7 @@
                 <h1 class="page-title">Cuerpo Médico</h1>
                 <p class="page-subtitle">Supervisión del personal médico, especialidades y códigos CMP.</p>
             </div>
-            <button class="btn-primary-custom" type="button">
+            <button class="btn-primary-custom" type="button" onclick="document.getElementById('modalMedico').classList.add('show')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 11v6m-3-3h6"/></svg>
                 Nuevo Médico
             </button>
@@ -319,14 +358,15 @@
                             <td style="font-weight: 600;"><%= m.getNombres() %> <%= m.getApellidos() %></td>
                             <td><%= m.getCmp() %></td>
                             <td><%= m.getEspecialidad() %></td>
-                            <td><%= m.getTelefono() %></td>
+                            <td><%= m.getTelefono() != null ? m.getTelefono() : "-" %></td>
                             <td><span class="badge"><%= m.getEstado() %></span></td>
                             <td style="text-align: center;">
                                 <div class="action-btns">
-                                    <button class="btn-icon edit" title="Editar médico">
+                                    <button type="button" class="btn-icon edit" title="Editar médico"
+                                        onclick="abrirEditar('<%= m.getIdMedico() %>', '<%= m.getIdUsuario() %>', '<%= m.getNombres() %>', '<%= m.getApellidos() %>', '<%= m.getCmp() %>', '<%= m.getEspecialidad() %>', '<%= m.getTelefono() %>', '<%= m.getEstado() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <button class="btn-icon delete" title="Eliminar médico">
+                                    <button type="button" class="btn-icon delete" title="Eliminar médico" onclick="abrirEliminar('<%= m.getIdMedico() %>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                                     </button>
                                 </div>
@@ -345,6 +385,144 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal para Registrar Nuevo Médico -->
+    <div class="modal-overlay" id="modalMedico">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Registrar Nuevo Médico</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalMedico').classList.remove('show')">&times;</button>
+            </div>
+            <form action="medicos" method="POST">
+                <input type="hidden" name="accion" value="registrar">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID Usuario Asociado</label>
+                        <input type="number" name="idUsuario" required placeholder="Ej: 2">
+                    </div>
+                    <div class="form-group">
+                        <label>Código CMP</label>
+                        <input type="text" name="cmp" required placeholder="Ej: 54321">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" name="nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Especialidad</label>
+                        <input type="text" name="especialidad" required placeholder="Ej: Cardiología">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalMedico').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Médico</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Médico -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Editar Médico</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEditar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="medicos" method="POST">
+                <input type="hidden" name="accion" value="actualizar">
+                <input type="hidden" name="idMedico" id="editIdMedico">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID Usuario Asociado</label>
+                        <input type="number" name="idUsuario" id="editIdUsuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Código CMP</label>
+                        <input type="text" name="cmp" id="editCmp" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" name="nombres" id="editNombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" id="editApellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Especialidad</label>
+                        <input type="text" name="especialidad" id="editEspecialidad" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono" id="editTelefono">
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado" id="editEstado">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEditar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Eliminar Médico -->
+    <div class="modal-overlay" id="modalEliminar">
+        <div class="modal-card" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 style="color: #ff5263;">Confirmar Eliminación</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('modalEliminar').classList.remove('show')">&times;</button>
+            </div>
+            <form action="medicos" method="POST">
+                <input type="hidden" name="accion" value="eliminar">
+                <input type="hidden" name="id" id="deleteIdMedico">
+                <div class="modal-body" style="grid-template-columns: 1fr; text-align: center; padding: 30px 24px;">
+                    <p style="margin: 0; font-size: 15px; color: var(--ink);">¿Estás seguro de que deseas eliminar este médico del sistema?</p>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">Esta acción borrará permanentemente sus datos profesionales.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('modalEliminar').classList.remove('show')">Cancelar</button>
+                    <button type="submit" class="btn-danger-custom">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Sí, Eliminar Médico
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    function abrirEditar(idMedico, idUsuario, nombres, apellidos, cmp, especialidad, telefono, estado) {
+        document.getElementById('editIdMedico').value = idMedico;
+        document.getElementById('editIdUsuario').value = idUsuario;
+        document.getElementById('editNombres').value = nombres;
+        document.getElementById('editApellidos').value = apellidos;
+        document.getElementById('editCmp').value = cmp;
+        document.getElementById('editEspecialidad').value = especialidad;
+        document.getElementById('editTelefono').value = (telefono !== 'null' && telefono !== '-') ? telefono : '';
+        document.getElementById('editEstado').value = estado;
+        document.getElementById('modalEditar').classList.add('show');
+    }
+
+    function abrirEliminar(id) {
+        document.getElementById('deleteIdMedico').value = id;
+        document.getElementById('modalEliminar').classList.add('show');
+    }
+</script>
 </body>
 </html>
