@@ -9,6 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+// IMPORTAMOS LA LIBRERÍA DE BCRYPT
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/UsuarioServlet", "/usuarios"})
 public class UsuarioServlet extends HttpServlet {
@@ -38,15 +40,19 @@ public class UsuarioServlet extends HttpServlet {
 
         if ("registrar".equals(accion)) {
             String nombre = request.getParameter("nombreUsuario");
-            String email = request.getParameter("email"); // Captura el email ingresado en el modal
-            String password = request.getParameter("contrasena");
+            String email = request.getParameter("email");
+            String passwordPlano = request.getParameter("contrasena"); 
             int rol = Integer.parseInt(request.getParameter("idRol"));
             String estado = request.getParameter("estado");
 
+            // --- AQUÍ APLICAMOS LA ENCRIPTACIÓN BCRYPT ---
+            String passwordHasheado = BCrypt.hashpw(passwordPlano, BCrypt.gensalt());
+
             Usuario u = new Usuario();
             u.setNombreUsuario(nombre);
-            u.setEmail(email); // Asigna el email real del formulario
-            u.setContrasenaHash(password);
+            u.setEmail(email);
+            // Guardamos el password ya encriptado
+            u.setContrasenaHash(passwordHasheado); 
             u.setIdRol(rol);
             u.setEstado(estado);
             u.setIntentosFallidos(0);
